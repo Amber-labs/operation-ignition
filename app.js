@@ -25,6 +25,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
+// redirect bootstrap JS
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+// redirect JS jQuery
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
+//redirect JS angularjs
+app.use('/js', express.static(__dirname + '/node_modules/angular'));
+// redirect CSS bootstrap
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
