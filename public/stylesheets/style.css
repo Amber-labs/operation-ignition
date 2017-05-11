@@ -10,12 +10,15 @@ div.card
   background-color: white;
   border-radius: 6px;
   border: solid 1px rgb(208,208,208);
-  padding: 20px 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: auto;
+  padding-right: auto;
   max-width: 1000px;
   margin: auto;
 }
 
-div.card > div.container { max-width:  800px; }
+div.card > div.container { max-width:  650px; }
 
 div.center { text-align: center; }
 

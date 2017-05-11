@@ -15,6 +15,8 @@ router.post('/register', function (req, res, next) {
   var name = req.body.name;
   var email = req.body.email;
   var password = req.body.password;
+
+
 });
 
 router.get('/login', function (req, res, next) {
