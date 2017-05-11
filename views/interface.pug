@@ -47,3 +47,24 @@ mixin nav-bullet(item, link, active)
     else
         li(role='presentation')
             a(href= link)= item
+
+mixin title(name)
+    h2.page-header= name
+
+mixin form(feilds)
+    form(method='post' action='/accounts/login')
+        each field in feilds
+            +input(field)
+        +input('submit','button')
+
+mixin input(name, type)
+    div.form-group
+        case type
+            when 'button'
+                div.col-xs-12.center
+                    button(id='submit_login', type='submit', class='btn btn-sm')= name
+            default
+                div.col-xs-12
+                    label= name
+                div.col-xs-12
+                    input(type='text' class='form-control' placeholder= name, name= name)

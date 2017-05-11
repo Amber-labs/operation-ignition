@@ -1,5 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
+/* Remove bootstrap default underline */
+.page-header { border-bottom: none; text-align: center; font-size: 44px; }
+
+div.card
+{
+  background-color: white;
+  border-radius: 6px;
+  border: solid 1px rgb(208,208,208);
+  padding: 20px 30px;
+  max-width: 1000px;
+  margin-auto;
+}
+
+div.card > div.container { max-width:  800px; }
+
+div.center { text-align: center; }
+
+div.form-group { margin-auto; margin-bottom: 15px; }
+div.form-group > label {  }
+div.form-group > div.col-xs-12 > input { margin-bottom: 10px; }
+
 html, body
 {
   width: 100%;
@@ -15,6 +36,7 @@ nav
 {
   background-color: #DE3C4B;
   padding: 20px 15px;
+  margin-bottom: 20px;
 }
 nav a { color: white; }
 nav a:hover { color: lightgrey; }

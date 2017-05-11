@@ -1,4 +1,10 @@
 extends interface
 
 block content
-    h1 Login
+    div.card
+        div.container
+            div.row
+                +title('Log in')
+            div.row
+                +form(['Username','Password'])
+
