@@ -3,3 +3,7 @@ os: linux
 files:
   - source: ./
     destination: /home/ec2-user/public_html/operation-ignition
+script:
+  tmux kill-session -t ignite
+  tmux new -s ignite
+  npm start
