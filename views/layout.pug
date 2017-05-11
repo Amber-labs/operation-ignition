@@ -2,10 +2,7 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-
     link(type='text/javascript' src="phaser.min.js")
-
     // Bootstrap
     link(href="/css/bootstrap.css" rel="stylesheet" type="text/css")
     // JQuery
@@ -15,5 +12,10 @@ html
     // AngularJS
     script(src="/js/angular.js")
     // End of AngularJS
-  body
-    block content
+    //Ignite stylesheet
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    //Retrieves player data
+    script(type='text/javascript' src='/javascripts/playerData.js')
+  body(ng-app='ignite')
+    div(class='container' ng-controller='ignite-controller')
+      block content

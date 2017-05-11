@@ -4,9 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+/* Mongoose */
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/ignite');
+var db = mongoose.connection;
+/* End of Mongoose */
+//Express sessions
+var session = require('express-session');
+//Express validator
+var expressValidator = require('express-validator');
+/* Passport */
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
+/* End of Passport */
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/accounts');
+var api = require('./routes/api');
+var accounts = require('./routes/accounts');
 
 var app = express();
 
@@ -22,8 +37,44 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Express Session
+app.use(session({
+    //temporary secret
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
+
+//Express validator
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value){
+        var namespace = param.split('.'), root = namespace.shift(),formParam = root;
+
+        while(namespace.length){
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return{
+            param : formParam,
+            msg : msg,
+            value : value
+        };
+    }
+}));
+
+//Passport initialize
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Global attributes
+app.use(function(req,res, next){
+    res.locals.user =req.user || null;
+    next();
+});
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/api', api);
+app.use('/accounts', accounts);
 
 // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
