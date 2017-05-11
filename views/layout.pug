@@ -1,28 +1,9 @@
 doctype html
 html
-  head
-    title= title
-    // Phaser dependencies
-    link(type='text/javascript' src="phaser.min.js")
-    link(type='text/javascript' src="boot.js")
-    link(type='text/javascript' src="load.js")
-    // End of Phaser dependencies
-
-    // Bootstrap
-    link(href="/css/bootstrap.css" rel="stylesheet" type="text/css")
-    // JQuery
-    script(src="/js/jquery.min.js")
-    script(src="/js/bootstrap.min.js")
-    // End of bootstrap dependencies
-
-    // AngularJS
-    script(src="/js/angular.js")
-    // End of AngularJS
-
-    //Ignite stylesheet
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    //Retrieves player data
-    script(type='text/javascript' src='/javascripts/playerData.js')
-  body(ng-app='ignite')
-    div(class='container' ng-controller='ignite-controller')
-      block content
+    head
+        title= title
+        +multiscripts
+    body(ng-app='ignite')
+        block header
+        div(class='container' ng-controller='ignite-controller')
+            block content

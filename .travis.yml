@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+- '6.10.0'
+services:
+- mongodb
+cache:
+  directories:
+    - node_modules
+script:
+  - zip -r latest *
+  - mkdir -p releases
+  - mv latest.zip releases/latest.zip
+deploy:
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  local_dir: releases
+  skip_cleanup: true
+  on: &2
+    branch: release
+  bucket: team-ignition
+  region: us-west-2
+- provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: team-ignition
+  key: latest.zip
+  bundle_type: zip
+  application: operation-ignition
+  deployment_group: ignition-servers
+  region: us-west-2
+  on: *2
