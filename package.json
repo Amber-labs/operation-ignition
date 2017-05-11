@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "angular": "^1.6.4",
-    "bcrypt": "^1.0.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "~1.17.1",
     "bootstrap": "^3.3.7",
