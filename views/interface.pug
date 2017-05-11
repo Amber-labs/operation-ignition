@@ -23,14 +23,27 @@ mixin multiscripts
     //Retrieves player data
     script(type='text/javascript' src='/javascripts/playerData.js')
 
-block header
+mixin header
     nav
-        ul(class='nav nav-pills pull-right')
-            li(role='presentation')
-                a(href='/') Home
+        div.container
+            div.row
+                ul(class='nav nav-pills pull-right')
+                        +nav-bullet('home','/')
+                        if user
+                            +nav-bullet('logout','/accounts/logout')
+                            +nav-bullet('account','/accounts')
+                        else
+                            +nav-bullet('login','/accounts/login')
+                            +nav-bullet('sign up','/accounts/register')
+                h1
+                    a(href='http://35.164.0.62:3000/')#nav-title Ignite
+            div.row
+                p#nav-message #{message}
 
-            li(role='presentation')
-                a(href='/about') About
-        h1
-            a(href='https://Cynicalbird.github.io/')#nav-title Ignite
-        p#nav-message #{message}
+mixin nav-bullet(item, link, active)
+    if(active)
+        li(role='active')
+            a(href= link)= item
+    else
+        li(role='presentation')
+            a(href= link)= item
