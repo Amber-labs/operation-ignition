@@ -3,6 +3,8 @@
 /* Remove bootstrap default underline */
 .page-header { border-bottom: none; text-align: center; font-size: 44px; }
 
+button[type=submit] { background-color: #FB651D; color: white; padding: 10px 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+
 div.card
 {
   background-color: white;
@@ -17,7 +19,7 @@ div.card > div.container { max-width:  800px; }
 
 div.center { text-align: center; }
 
-div.form-group { margin-auto; margin-bottom: 15px; }
+div.form-group { margin: auto; margin-bottom: 15px; }
 div.form-group > label {  }
 div.form-group > div.col-xs-12 > input { margin-bottom: 10px; }
 
@@ -37,14 +39,18 @@ nav
   background-color: #DE3C4B;
   padding: 20px 15px;
   margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 nav a { color: white; }
 nav a:hover { color: lightgrey; }
-.nav > li > a { background-color: inherit;
+.nav > li > a
+{
+  background-color: inherit;
   -webkit-transition: background-color 0.5s;
   -moz-transition: background-color 0.5s;
   -ms-transition: background-color 0.5s;
   -o-transition: background-color 0.5s;
-  transition: background-color 0.5s; }
-.nav > li > a:hover { background-color: #FB651D; }
+  transition: background-color 0.5s , box-shadow 0.5s;
+}
+.nav > li > a:hover { background-color: #FB651D; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
 nav h1, nav h2, nav h3, nav h4, nav h5, nav h6, #nav-title, #nav-message { margin: 0px; }

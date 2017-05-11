@@ -51,8 +51,8 @@ mixin nav-bullet(item, link, active)
 mixin title(name)
     h2.page-header= name
 
-mixin form(feilds)
-    form(method='post' action='/accounts/login')
+mixin form(feilds, action)
+    form(method='post' action= action)
         each field in feilds
             +input(field)
         +input('submit','button')

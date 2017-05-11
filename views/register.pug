@@ -1,0 +1,9 @@
+extends interface
+
+block content
+    div.card
+        div.container
+            div.row
+                +title('Sign up')
+            div.row
+                +form(['Username','Password','Confirm Password','Name','Email'],'/accounts/register')
