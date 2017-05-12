@@ -24,7 +24,7 @@ router.post('/register', function (req, res, next) {
   req.checkBody('Email', 'Invalid Email').isEmail();
   req.checkBody('Username', 'Username is Required').notEmpty();
   req.checkBody('Password', 'Password is Required').notEmpty();
-  req.checkBody('Confirm-Password', 'Passwords do not match').equals(req.body.password);
+  req.checkBody('Confirm-Password', 'Passwords do not match').equals(password);
   var errors = req.validationErrors();
   //req form has errors
   if (errors){
@@ -86,6 +86,7 @@ router.post('/login', function (req, res, next){
 passport.use(new LocalStrategy(
     function(username, password, done) {
         User.getUserByUsername(username, function(err, user){
+            console.log('hi');
             if(err){
                 throw err;
             }

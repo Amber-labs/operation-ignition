@@ -35,7 +35,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//public assets
 app.use(express.static(path.join(__dirname, 'public')));
+// redirect bootstrap JS
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+// redirect JS jQuery
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
+//redirect JS angularjs
+app.use('/js', express.static(__dirname + '/node_modules/angular'));
+// redirect CSS bootstrap
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 //Express Session
 app.use(session({
@@ -44,6 +53,10 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+
+//Passport initialize
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Express validator
 app.use(expressValidator({
@@ -61,10 +74,6 @@ app.use(expressValidator({
     }
 }));
 
-//Passport initialize
-app.use(passport.initialize());
-app.use(passport.session());
-
 //Global attributes
 app.use(function(req,res, next){
     res.locals.user =req.user || null;
@@ -75,15 +84,6 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/api', api);
 app.use('/accounts', accounts);
-
-// redirect bootstrap JS
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
-// redirect JS jQuery
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
-//redirect JS angularjs
-app.use('/js', express.static(__dirname + '/node_modules/angular'));
-// redirect CSS bootstrap
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
