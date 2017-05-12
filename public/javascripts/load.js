@@ -11,6 +11,16 @@ var load = {
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
 
+        //load the images or call the json file for the images
+
+
+    },
+    create: function () {
+        //particles.lights = this.add.group();
+        this.state.start('logo');
+    },
+    update: function () {
+        console.log('in update function of LOAD file');
     }
 
-}
+};
