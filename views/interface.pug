@@ -68,3 +68,8 @@ mixin input(name, type)
                     label= name
                 div.col-xs-12
                     input(type='text' class='form-control' placeholder= name, name= name)
+block errors
+    if errors
+        div(class='alert alert-danger')
+            each error in errors
+                p= error.msg

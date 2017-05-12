@@ -8,4 +8,9 @@ html
     body(ng-app='ignite')
         +header
         div(class='container' ng-controller='ignite-controller')
-            block content
+            div.row
+                div.container#container-logo
+                    img(id='ignite-logo' alt='ignit-logo' src='/images/logo/ignite.png')
+            div.row
+                block content
+                    block errors

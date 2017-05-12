@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
+#container-logo, #ignite-logo { max-width: 500px; text-align: center; margin: auto; }
+
 /* Remove bootstrap default underline */
 .page-header { border-bottom: none; text-align: center; font-size: 44px; }
 
@@ -16,6 +18,7 @@ div.card
   padding-right: auto;
   max-width: 1000px;
   margin: auto;
+  margin-bottom: 20px;
 }
 
 div.card > div.container { max-width:  650px; }
