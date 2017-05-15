@@ -76,11 +76,14 @@ router.get('/login', function (req, res, next) {
 });
 
 /* POST accounts login */
-router.post('/login', function (req, res, next){
-    passport.authenticate('local', {successRedirect: '/', failureRedirect: '/accounts/login', failureFlash: true}),
-        function(req, res) {
-            res.redirect('/');
-    };
+router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/accounts/register', failureFlash: true}), function(req, res) {
+    res.redirect('/');
+});
+
+/* GET accounts logout */
+router.get('/logout',function (req, res){
+    req.logout();
+    res.redirect('/accounts/login');
 });
 
 passport.use(new LocalStrategy(
