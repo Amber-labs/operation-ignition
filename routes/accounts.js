@@ -4,6 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
+var Player = require('../models/player');
 
 /* GET accounts register page. */
 router.get('/register', function(req, res, next) {
@@ -51,11 +52,40 @@ router.post('/register', function (req, res, next) {
                       name: name,
                       admin: false
                   });
+                  //new player
+                  var newPlayer = new Player({
+                      username: username,
+                      //base player data
+                      created: false,
+                      level: 1,
+                      experience: 0,
+                      //base player stats
+                      stats: {
+                          currentHealth: 10,
+                          maxHealth: 10,
+                          defence: 10,
+                          specialDefence: 10,
+                          attack: 10,
+                          specialAttack: 10,
+                          stamina: 10,
+                          mana: 10,
+                          precision: 10,
+                          healing: 10,
+                          buff: 10,
+                          condition: 10
+                      }
+                  });
                   //save new user to db
                   User.createUser(newUser, function (err, user) {
                       if (err)
                           throw err;
                       console.log(user);
+                  });
+                  //save new player to db
+                  Player.createPlayer(newPlayer, function (err, player){
+                     if (err)
+                         throw err;
+                     console.log(player);
                   });
 
                   res.render('index', {title: 'Home'});
