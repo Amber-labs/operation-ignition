@@ -39,6 +39,16 @@ var menu = {
     },
     create: function () {
     },
+
+    //update the player.created after talking to alex :)
+    actionOnClick: function () {
+        if( player.created == true){
+            this.state.start('map');
+        } else  {
+            this.state.start('char');
+        }
+
+    },
     update: function (){
     }
 };
