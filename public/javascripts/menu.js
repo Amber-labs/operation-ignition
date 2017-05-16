@@ -9,13 +9,14 @@ var menu = {
         console.log("calling the server");
         var request = new XMLHttpRequest();
         var port = ':3000';
+        var object;
         request.open('GET',url+port,true);
         request.onload = function ()
         {
             if (request.status >= 200 && request.status < 400)
 
             {
-                var object = JSON.parse(request.response);
+                object = JSON.parse(request.response);
                 console.log(object);
                 storeJSON(object);
             }
