@@ -5,32 +5,43 @@ var map = {
     preload: function () {
         console.log("MAP");
         //load the icons for setting, store, instructions, health, mana, coins
+        game.load.image('coin','images/icons/coin2.png');
+        game.load.image('store','images/icons/store.png');
+        game.load.image('info','images/icons/info.png');
+        game.load.image('mana','images/icons/manaHigher2.png');
+        game.load.image('setting','images/icons/setting.png');
     },
     create: function () {
         //display the icons once they are created
+        var coin = game.add.sprite(200, 20, 'coin');
+        var store = game.add.sprite(200, 20, 'store');
+        var info = game.add.sprite(200, 20, 'info');
+        var mana = game.add.sprite(200, 20, 'mana');
+        var setting = game.add.sprite(200, 20, 'setting');
 
-        /*
-        * var image = game.add.sprite(game.world.centerX, game.world.centerY, 'einstein');
+        //coin.inputEnabled = true;
+        store.inputEnabled = true;
+        info.inputEnabled = true;
+        //mana.inputEnabled = true;
+        setting.inputEnabled = true;
 
-         //  Moves the image anchor to the middle, so it centers inside the game properly
-         image.anchor.set(0.5);
+        store.events.onInputDown(store_action, this);
+        info.events.onInputDown(info_action, this);
+        setting.events.onInputDown(setting_action, this);
 
-         //  Enables all kind of input actions on this image (click, etc)
-         image.inputEnabled = true;
+        function store_action () {
 
-         text = game.add.text(250, 16, '', { fill: '#ffffff' });
+            this.state.start('store');
 
-         image.events.onInputDown.add(listener, this);
+        }
+        function info_action () {
 
-         }
+            this.state.start('info');
+        }
+        function setting_action () {
 
-         function listener () {
-
-         counter++;
-         text.text = "You clicked " + counter + " times!";
-
-         }
-        */
+            this.state.start('setting');
+        }
     },
     update: function() {
 
