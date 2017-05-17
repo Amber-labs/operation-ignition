@@ -4,18 +4,16 @@
 var boot = {
     preload: function()
     {
-        console.log("BOOT");
-
+        log('boot','entered state');
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
-        //add the images for the loading screen
-//        game.load.image('preloadBar', 'assets/title_screen/RUFighter_logo.png');
-//        game.load.image('logo','/assets/title_screen/vblack.png');
+        //preload the images for the loading screen
+        //game.load.image('preloadBar', 'assets/title_screen/RUFighter_logo.png');
+        //game.load.image('logo','/assets/title_screen/vblack.png');
     },
-
     create: function()
     {
-        this.state.start('load');
+        this.state.start('preload');
     }
 }

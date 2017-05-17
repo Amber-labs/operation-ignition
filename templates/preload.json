@@ -1,0 +1,21 @@
+{
+	"name":"preload",
+	"resources": [
+		{
+			"name": "heart_full",
+			"src": "/images/heart.png"
+		},
+		{
+			"name": "heart_empty",
+			"src": "/images/heart_blank.png"
+		},
+		{
+			"name":"potion_mana",
+			"src":"/images/potion_mana.png"
+		},
+		{
+			"name":"potion_empty",
+			"src":"/images/potion_blank.png"
+		}
+	]
+}

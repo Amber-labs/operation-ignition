@@ -130,18 +130,27 @@ var PlayerSchema = mongoose.Schema({
 
 var Player = module.exports = mongoose.model('Player', PlayerSchema);
 
+//creates a new player and saves to database
 module.exports.createPlayer = function(newPlayer, callback)
 {
+    //should add validation
     newPlayer.save(callback);
 };
 
+//query database for player based on username
 module.exports.getPlayerByUsername = function(username, callback)
 {
-    var query = {name: username};
+    var query = {username: username};
     Player.findOne(query,callback);
 }
 
+//query database for player based on id
 module.exports.getPlayerById = function(id, callback){
     Player.findById(id, callback);
 }
+
+/* To do
+* Player save/update
+* Validation
+*/
 

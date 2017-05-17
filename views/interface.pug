@@ -1,13 +1,6 @@
 extends layout
 
-mixin multiscripts
-    // Phaser dependencies
-    link(type='text/javascript' src="/javascripts/phaser.min.js")
-    script(type='text/javascript' src="/javascripts/boot.js")
-    script(type='text/javascript' src="/javascripts/load.js")
-    script(type='text/javascript' src="/javascripts/game.js")
-    // End of Phaser dependencies
-
+block multiscripts
     // Bootstrap
     link(href="/css/bootstrap.css" rel="stylesheet" type="text/css")
     // JQuery
@@ -24,7 +17,7 @@ mixin multiscripts
     //Retrieves player data
     script(type='text/javascript' src='/javascripts/playerData.js')
 
-mixin header
+block navigation
     nav
         div.container
             div.row

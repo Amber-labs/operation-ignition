@@ -73,6 +73,16 @@ router.post('/register', function (req, res, next) {
                           healing: 10,
                           buff: 10,
                           condition: 10
+                      },
+                      inventory : [],
+                      equipment: {
+                          weapon: {},
+                          armor: {
+                              helmet: {},
+                              shirt: {},
+                              pants: {},
+                              shoes: {},
+                          }
                       }
                   });
                   //save new user to db

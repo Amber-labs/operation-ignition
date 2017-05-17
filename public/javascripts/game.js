@@ -1,12 +1,12 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-container', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-container');
 
-function preload() {
-    game.load.image('heart', '/images/heart.png');
-}
+game.state.add('boot', boot);
+game.state.add('preload',preload);
 
-function create() {
-    game.add.sprite(0, 0, 'heart');
-}
+game.state.start('boot');
 
-function update() {
+//standard log to console
+function log(tag, message)
+{
+    console.log("["+tag+"] : "+message);
 }

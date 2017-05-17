@@ -4,3 +4,11 @@ block content
   h1= title
   p Welcome to #{title}
   div#game-container
+
+append multiscripts
+  // Phaser dependencies
+  script(type='text/javascript' src="/javascripts/phaser.min.js")
+  script(type='text/javascript' src="/javascripts/boot.js")
+  script(type='text/javascript' src="/javascripts/preload.js")
+  script(type='text/javascript' src="/javascripts/game.js")
+  // End of Phaser dependencies
