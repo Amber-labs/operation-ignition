@@ -7,6 +7,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Player = require('../models/player');
 var State = require('../models/state');
+var Class = require('../models/class');
 
 /* Get player data route
 * JSON API for returning player data from backend to front end
@@ -45,6 +46,25 @@ router.post('/players/data', function (req, res, next) {
     });
 });
 
+/*
+* JSON API for returning class data to front end
+ */
+router.get('/classes/data', function (req, res, next){
+    Class.getClasses(function (error, doc){
+        if (error)
+            res.render(error);
+        else
+        {
+            //Classes found and returned to client/frontend
+            if (typeof doc != undefined)
+                res.json(doc);
+            //Classes not found/not in database and should be added in
+            else
+                res.end('ERROR classes not found');
+        }
+    });
+});
+
 /* Get game states
 * JSON API for returning preload game state data
 * WIP, may be depreciated
@@ -71,7 +91,7 @@ function checkPlayerIdentity(user, res, next) {
         Player.getPlayerByUsername(user.username, function(error, doc){
             //error validating request identity
             if (error)
-                res.render('error',{error:error});
+                res.render('error', {error:error});
             else
             {
                 //success validating requested identity exists

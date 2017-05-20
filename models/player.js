@@ -21,6 +21,18 @@ var PlayerSchema = mongoose.Schema({
         buff: Number,
         condition: Number,
     },
+    appearance: {
+        head : {
+            eye: String,
+            hair: String,
+            face: String
+        },
+        clothes: {
+            shirt: String,
+            pants: String,
+            jacket: String,
+        }
+    },
     equipment: {
         weapon: {
             name: String,
