@@ -25,6 +25,23 @@ router.post('/players/data', function (req, res, next) {
     checkPlayerIdentity(req.user, res, function (player) {
         //validate player changes
             //save player updates
+
+        if (!player.created)
+        {
+                player.class = req.body.player.class;
+        }
+        else
+        {
+            if (req.body.player.specialization)
+                player.specialization = req.body.player.specialization;
+            //player validation
+            player.level = req.body.player.level;
+            player.experience = req.body.player.experience;
+            player.stats = req.body.player.stats;
+            player.equipment = req.body.player.equipment;
+        }
+        player.save();
+        console.log(req.body);
     });
 });
 

@@ -22,13 +22,12 @@ block navigation
         div.container
             div.row
                 ul(class='nav nav-pills pull-right')
-                        +nav-bullet('home','/')
-                        if user
-                            +nav-bullet('logout','/accounts/logout')
-                            +nav-bullet('account','/accounts')
-                        else
-                            +nav-bullet('login','/accounts/login')
-                            +nav-bullet('sign up','/accounts/register')
+                    if user
+                        +nav-bullet('logout','/accounts/logout')
+                        +nav-bullet('account','/accounts')
+                    else
+                        +nav-bullet('login','/accounts/login')
+                        +nav-bullet('sign up','/accounts/register')
                 h1
                     a(href='http://35.164.0.62:3000/')#nav-title Ignite
             div.row
