@@ -1,8 +1,15 @@
 var characterCreate = {
-    player: {test:'hi'},
     preload: function(){
         log('characterCreate','entered state');
         this.load.image('okay','/images/buttons/okay.png');
+        $.ajax({
+            url: '/api/classes/data',
+            type: 'GET',
+            success: function (result)
+            {
+                log('getClasses', JSON.stringify(result));
+            }
+        })
     },
     buttons : {},
     create: function() {
@@ -13,7 +20,8 @@ var characterCreate = {
         //  You can either set the tab size in the style object:
         var style = { font: "20px Courier", fill: "#fff", tabs: 132 };
         var text = 'Welcome: '+player.username+"!\t" +
-            "Level: "+player.level;
+            "Level: "+player.level+
+            "";
         var displayText = game.add.text(100, 64, text, style);
 
         function submitCharacter()
