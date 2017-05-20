@@ -2,14 +2,6 @@ var characterCreate = {
     preload: function(){
         log('characterCreate','entered state');
         this.load.image('okay','/images/buttons/okay.png');
-        $.ajax({
-            url: '/api/classes/data',
-            type: 'GET',
-            success: function (result)
-            {
-                log('getClasses', JSON.stringify(result));
-            }
-        })
     },
     buttons : {},
     create: function() {

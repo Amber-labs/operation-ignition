@@ -1,10 +1,21 @@
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game-container');
 var player;
+var classes;
 
 $.ajax({url: '/api/players/data', success: function(doc) {
     log('player',JSON.stringify(doc));
     player = doc;
 }});
+
+$.ajax({
+    url: '/api/classes/data',
+    type: 'GET',
+    success: function (doc)
+    {
+        log('getClasses', JSON.stringify(doc));
+        classes = doc;
+    }
+});
 
 //add the game states
 game.state.add('boot', boot);
