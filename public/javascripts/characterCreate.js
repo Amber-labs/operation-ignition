@@ -1,4 +1,7 @@
 var classSpec;
+var hair, eyes, face, weapons;
+var style = { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
+
 var characterCreate = {
     preload: function(){
         log('characterCreate','entered state');
@@ -9,6 +12,7 @@ var characterCreate = {
         //design the character create screen
         var graphics = game.add.graphics(20,20);
 
+        /*
         // set a fill and line style
         graphics.beginFill(0x2f323a, 0.6);
         graphics.lineStyle(3, 0x2f323a, 1);
@@ -18,30 +22,30 @@ var characterCreate = {
         graphics.lineTo(game.width - 40, game.height - 40);
         graphics.lineTo(0, game.height - 40);
         graphics.endFill();
-
+        */
         //------------------------class ----------------------
         // set a fill and line style again
-        graphics.lineStyle(5, 0xA2A79E, 0.8);
-        graphics.beginFill(0xA2A79E, 0.6);
+        graphics.lineStyle(3, 0xEFF1ED, 0.5);
+        graphics.beginFill(0xA2A79E, 0.0);
 
         // draw class selection
-        graphics.moveTo(25,25);
-        graphics.lineTo(450,25);
-        graphics.lineTo(450,game.height - 65);
+        graphics.moveTo(15,105);
+        graphics.lineTo(400,105);
+        graphics.lineTo(400,game.height - 65);
         graphics.lineTo(25,game.height - 65);
         graphics.endFill();
 
-        graphics.lineStyle(3, 0xEFF1ED, 0.7);
-        graphics.beginFill(0xEFF1ED, 0.6);
+        graphics.lineStyle(3, 0xEFF1ED, 0.5);
+        graphics.beginFill(0xEFF1ED, 0.0);
         // draw class selection
-        graphics.moveTo(50,50);
-        graphics.lineTo(425,50);
-        graphics.lineTo(425,200);
-        graphics.lineTo(50,200);
+        graphics.moveTo(15,15);
+        graphics.lineTo(400,15);
+        graphics.lineTo(400,100);
+        graphics.lineTo(15,100);
         graphics.endFill();
         //add the class and keeps it in the center as well
-        classSpec = game.add.text(0, 0, classes.classes[0], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        classSpec.setTextBounds(50, 50, 425, 200);
+        classSpec = game.add.text(20, 20, classes.classes[0], style);
+        classSpec.setTextBounds(15, 15, 400, 85);
         //adding action to the arrows
         var larrow = game.add.graphics(0,0);
         larrow.lineStyle(2, 0xde3c4b, 1);
@@ -61,9 +65,9 @@ var characterCreate = {
         var rarrow = game.add.graphics(0,0);
         rarrow.lineStyle(2, 0xde3c4b, 1);
         rarrow.beginFill(0xde3c4b, 0.6);
-        rarrow.moveTo(448,point1);
-        rarrow.lineTo(448,point2);
-        rarrow.lineTo(448+15,point3);
+        rarrow.moveTo(400,point1);
+        rarrow.lineTo(400,point2);
+        rarrow.lineTo(400+15,point3);
         rarrow.inputEnabled = true;
         rarrow.events.onInputDown.add(nextClass, this);
 
@@ -74,11 +78,6 @@ var characterCreate = {
 
        // arrowGenerator(300,48, "l" );
        // arrowGenerator(300, 428, "r" );
-
-        // draw a rectangle for character create
-        graphics.lineStyle(2, 0x0000FF, 1);
-        graphics.drawRect(500, 25, 300, game.height - 90);
-
 
         function arrowGenerator(cord, x, side)
         {
@@ -101,7 +100,7 @@ var characterCreate = {
             }
             graphics.endFill();
         }
-
+        /*
         arrowGenerator(25, 860, "l" );
         arrowGenerator(95, 860,"l"  );
         arrowGenerator(165, 860 ,"l" );
@@ -114,12 +113,37 @@ var characterCreate = {
 
         graphics.lineStyle(2, 0xa2a79b, 1);
         graphics.beginFill(0xa2a79b, 0.6);
+
         graphics.drawRect(870, 25, 300, 50);
+        //add the class and keeps it in the center as well
+        hair = game.add.text(20, 20, "Hair" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        hair.setTextBounds(870, 25, 300, 50);
+
         graphics.drawRect(870, 95, 300, 50);
+        hair = game.add.text(20, 20, "Eyes" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        hair.setTextBounds(870, 95, 300, 50);
+
         graphics.drawRect(870, 165, 300, 50);
+        hair = game.add.text(20, 20, "Face" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        hair.setTextBounds(870, 165, 300, 50);
+
         graphics.drawRect(870, 235, 300, 50);
+        hair = game.add.text(20, 20, "Weapons" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        hair.setTextBounds(870, 235, 300, 50);
+        */
+        //Test something to see if this idea will work
 
+        hairTab();
+        eyeTab();
+        faceTab();
+        weaponTab();
+        TabText();
 
+        /*
+        graphics.beginFill(0xDEB887);
+        graphics.lineStyle(3, 0xF4A460, 1);
+        graphics.drawRect(855, 370, 50, 50);
+        */
         window.graphics = graphics;
 
         buttons = game.add.group();
@@ -127,11 +151,10 @@ var characterCreate = {
         buttons.add(okayButton);
 
         //  You can either set the tab size in the style object:
-        var style = { font: "20px Courier", fill: "#fff", tabs: 132 };
-        var text = 'Welcome: '+player.username+"!\t" +
-            "Level: "+player.level+
-            "";
-        var displayText = game.add.text(100, 64, text, style);
+        //var text = 'Welcome: '+player.username+"!\t" +
+         //   "Level: "+player.level+
+          //  "";
+        // var displayText = game.add.text(100, 64, text, style);
 
         function submitCharacter()
         {
@@ -159,6 +182,97 @@ var characterCreate = {
     },
 };
 var classIndex = 0;
+function TabText()
+{
+    hair = game.add.text(20, 20, "Hair" ,{ font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" } );
+    hair.setTextBounds(800, 17, 110, 40);
+    hair.inputEnabled = true;
+    hair.events.onInputOver.add(hairOver,this);
+    hair.events.onInputOut.add(hairOut,this);
+    hair.events.onInputDown.add(hairDown,this);
+
+    eyes = game.add.text(20, 20, "Eyes" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
+    eyes.setTextBounds(900, 17, 110, 40);
+    eyes.events.onInputOver.add(eyesOver,this);
+    eyes.events.onInputOut.add(eyesOut,this);
+    eyes.events.onInputDown.add(eyesDown,this);
+
+    face = game.add.text(20, 20, "Face" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
+    face.setTextBounds(1000, 17, 110, 40);
+    face.events.onInputOver.add(faceOver,this);
+    face.events.onInputOut.add(faceOut,this);
+    face.events.onInputDown.add(faceDown,this);
+
+    weapon = game.add.text(20, 20, "Weapon" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
+    weapon.setTextBounds(1100, 17, 110, 40);
+    weapon.events.onInputOver.add(weaponOver,this);
+    weapon.events.onInputOut.add(weaponOut,this);
+    weapon.events.onInputDown.add(weaponDown,this);
+}
+function hairTab()
+{
+    var hairTAB = game.add.graphics(20,20);
+    // Hair Tab
+    hairTAB.beginFill(0xDE3C4B);
+    hairTAB.lineStyle(3, 0x9b2a34, 1);
+    hairTAB.moveTo(800,55);
+    hairTAB.lineTo(810, 15);
+    hairTAB.lineTo(900, 15);
+    hairTAB.lineTo(910, 55);
+    // graphics.lineTo(1010, 55);
+    hairTAB.lineTo(game.width-65, 55);
+    hairTAB.lineTo(game.width-65, game.height - 65);
+    hairTAB.lineTo(800, game.height - 65);
+    hairTAB.endFill();
+}
+function eyeTab()
+{
+    var eyeTAB = game.add.graphics(20,20);
+    // Eyes tab
+    eyeTAB.beginFill(0xFB651D);
+    eyeTAB.lineStyle(3, 0xaf4614, 1);
+    eyeTAB.moveTo(800,55);
+    eyeTAB.lineTo(900, 55);
+    eyeTAB.lineTo(910, 15);
+    eyeTAB.lineTo(1000, 15);
+    eyeTAB.lineTo(1010, 55);
+    eyeTAB.lineTo(game.width-65, 55);
+    eyeTAB.lineTo(game.width-65, game.height - 65);
+    eyeTAB.lineTo(800, game.height - 65);
+    eyeTAB.endFill();
+}
+function faceTab()
+{
+    var faceTAB = game.add.graphics(20,20);
+    // Face tab
+    faceTAB.beginFill(0x2F323A);
+    faceTAB.lineStyle(3, 0x202328, 1);
+    faceTAB.moveTo(800,55);
+    faceTAB.lineTo(1000, 55);
+    faceTAB.lineTo(1010, 15);
+    faceTAB.lineTo(1100, 15);
+    faceTAB.lineTo(1110, 55);
+    faceTAB.lineTo(game.width-65, 55);
+    faceTAB.lineTo(game.width-65, game.height - 65);
+    faceTAB.lineTo(800, game.height - 65);
+    faceTAB.endFill();
+}
+function weaponTab()
+{
+    var weaponTAB = game.add.graphics(20,20);
+    // Weapon tab
+    weaponTAB.beginFill(0xA2A79E);
+    weaponTAB.lineStyle(3, 0x71746e, 1);
+    weaponTAB.moveTo(800,55);
+    weaponTAB.lineTo(1100, 55);
+    weaponTAB.lineTo(1110, 15);
+    weaponTAB.lineTo(1200, 15);
+    weaponTAB.lineTo(1210, 55);
+    weaponTAB.lineTo(game.width-65, 55);
+    weaponTAB.lineTo(game.width-65, game.height - 65);
+    weaponTAB.lineTo(800, game.height - 65);
+    weaponTAB.endFill();
+}
 
 function preClass() {
     console.log("in pre class ");
@@ -166,14 +280,14 @@ function preClass() {
     classIndex--;
     if (classIndex > 0 )
     {
-        classSpec = game.add.text(0, 0, classes.classes[classIndex], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        classSpec.setTextBounds(50, 50, 425, 200);
+        classSpec = game.add.text(20, 20, classes.classes[classIndex], style);
+        classSpec.setTextBounds(15, 15, 400, 85);
     }
     else if (classIndex <= 0)
     {
         classIndex = 0;
-        classSpec = game.add.text(0, 0, classes.classes[classIndex], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        classSpec.setTextBounds(50, 50, 425, 200);
+        classSpec = game.add.text(20, 20, classes.classes[classIndex], style);
+        classSpec.setTextBounds(15, 15, 400, 85);
     }
 }
 function nextClass() {
@@ -185,13 +299,13 @@ function nextClass() {
 
     if (classIndex < classes.classes.length )
     {
-        classSpec = game.add.text(0, 0, classes.classes[classIndex], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        classSpec.setTextBounds(50, 50, 425, 200);
+        classSpec = game.add.text(20, 20, classes.classes[classIndex], style);
+        classSpec.setTextBounds(15, 15, 400, 85);
     }
     else if (classIndex >= classes.classes.length)
     {
-        classSpec = game.add.text(0, 0, classes.classes[classes.classes.length-1], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        classSpec.setTextBounds(50, 50, 425, 200);
+        classSpec = game.add.text(20, 20, classes.classes[classes.classes.length-1], style);
+        classSpec.setTextBounds(15, 15, 400, 85);
         classIndex = classes.classes.length-1;
     }
 }
@@ -239,18 +353,70 @@ function out(cord, x, side){
     arrow.endFill();
 }
 function nextClassOver() {
-    over(320,448,"r");
+    over(320,400,"r");
 }
 function preClassOver() {
     over(320,68,"l");
 
 }
 function nextClassOut() {
-    out(320,448,"r");
+    out(320,400,"r");
 }
 function preClassOut() {
     out(320,68,"l");
 
+}
+function hairOver()
+{
+
+}
+function hairOut()
+{
+
+}
+function hairDown()
+{
+    console.log("hair");
+    eyeTab(); faceTab(); weaponTab(); hairTab(); TabText();
+}
+function eyesOver()
+{
+
+}
+function eyesOut()
+{
+
+}
+function eyesDown()
+{
+    console.log("eyes");
+    hairTab();  faceTab(); weaponTab(); eyeTab(); TabText();
+}
+function faceOver()
+{
+
+}
+function faceOut()
+{
+
+}
+function faceDown()
+{
+    console.log("face");
+    hairTab(); eyeTab();  weaponTab();  faceTab(); TabText();
+}
+function weaponOver()
+{
+
+}
+function weaponOut()
+{
+
+}
+function weaponDown()
+{
+    console.log("weapon");
+    hairTab(); eyeTab();  faceTab(); weaponTab(); TabText();
 }
 var classes = {
     class: {
