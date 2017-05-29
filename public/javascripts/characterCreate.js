@@ -12,17 +12,6 @@ var characterCreate = {
         //design the character create screen
         var graphics = game.add.graphics(20,20);
 
-        /*
-        // set a fill and line style
-        graphics.beginFill(0x2f323a, 0.6);
-        graphics.lineStyle(3, 0x2f323a, 1);
-
-        // background shape
-        graphics.lineTo(game.width - 40, 0);
-        graphics.lineTo(game.width - 40, game.height - 40);
-        graphics.lineTo(0, game.height - 40);
-        graphics.endFill();
-        */
         //------------------------class ----------------------
         // set a fill and line style again
         graphics.lineStyle(3, 0xEFF1ED, 0.5);
@@ -100,54 +89,19 @@ var characterCreate = {
             }
             graphics.endFill();
         }
-        /*
-        arrowGenerator(25, 860, "l" );
-        arrowGenerator(95, 860,"l"  );
-        arrowGenerator(165, 860 ,"l" );
-        arrowGenerator(235, 860 ,"l" );
 
-        arrowGenerator(25, 1180 , "r");
-        arrowGenerator(95, 1180 , "r");
-        arrowGenerator(165, 1180 , "r");
-        arrowGenerator(235, 1180 , "r");
-
-        graphics.lineStyle(2, 0xa2a79b, 1);
-        graphics.beginFill(0xa2a79b, 0.6);
-
-        graphics.drawRect(870, 25, 300, 50);
-        //add the class and keeps it in the center as well
-        hair = game.add.text(20, 20, "Hair" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        hair.setTextBounds(870, 25, 300, 50);
-
-        graphics.drawRect(870, 95, 300, 50);
-        hair = game.add.text(20, 20, "Eyes" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        hair.setTextBounds(870, 95, 300, 50);
-
-        graphics.drawRect(870, 165, 300, 50);
-        hair = game.add.text(20, 20, "Face" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        hair.setTextBounds(870, 165, 300, 50);
-
-        graphics.drawRect(870, 235, 300, 50);
-        hair = game.add.text(20, 20, "Weapons" , { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
-        hair.setTextBounds(870, 235, 300, 50);
-        */
         //Test something to see if this idea will work
 
-        hairTab();
         eyeTab();
         faceTab();
         weaponTab();
+        hairTab();
         TabText();
 
-        /*
-        graphics.beginFill(0xDEB887);
-        graphics.lineStyle(3, 0xF4A460, 1);
-        graphics.drawRect(855, 370, 50, 50);
-        */
         window.graphics = graphics;
 
         buttons = game.add.group();
-        var okayButton = game.make.button(game.width - 150 , game.height - 100, 'okay', submitCharacter, this, 2, 1, 0);
+        var okayButton = game.make.button(game.width/2 , game.height - 100, 'okay', submitCharacter, this, 2, 1, 0);
         buttons.add(okayButton);
 
         //  You can either set the tab size in the style object:
@@ -193,21 +147,40 @@ function TabText()
 
     eyes = game.add.text(20, 20, "Eyes" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
     eyes.setTextBounds(900, 17, 110, 40);
+    eyes.inputEnabled = true;
     eyes.events.onInputOver.add(eyesOver,this);
     eyes.events.onInputOut.add(eyesOut,this);
     eyes.events.onInputDown.add(eyesDown,this);
 
     face = game.add.text(20, 20, "Face" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
     face.setTextBounds(1000, 17, 110, 40);
+    face.inputEnabled = true;
     face.events.onInputOver.add(faceOver,this);
     face.events.onInputOut.add(faceOut,this);
     face.events.onInputDown.add(faceDown,this);
 
     weapon = game.add.text(20, 20, "Weapon" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
     weapon.setTextBounds(1100, 17, 110, 40);
+    weapon.inputEnabled = true;
     weapon.events.onInputOver.add(weaponOver,this);
     weapon.events.onInputOut.add(weaponOut,this);
     weapon.events.onInputDown.add(weaponDown,this);
+}
+function tabLayout()
+{
+    var hairTAB = game.add.graphics(20,20);
+    // Hair Tab
+    hairTAB.beginFill(0xDE3C4B);
+    hairTAB.lineStyle(3, 0x9b2a34, 1);
+    hairTAB.moveTo(800,55);
+    hairTAB.lineTo(810, 15);
+    hairTAB.lineTo(900, 15);
+    hairTAB.lineTo(910, 55);
+    // graphics.lineTo(1010, 55);
+    hairTAB.lineTo(game.width-65, 55);
+    hairTAB.lineTo(game.width-65, game.height - 65);
+    hairTAB.lineTo(800, game.height - 65);
+    hairTAB.endFill();
 }
 function hairTab()
 {
@@ -368,11 +341,13 @@ function preClassOut() {
 }
 function hairOver()
 {
-
+    hair.fill = "#000000";
+    hair.stroke = "#000000";
 }
 function hairOut()
 {
-
+    hair.fill = "#ffffff";
+    hair.stroke = "#ffffff";
 }
 function hairDown()
 {
@@ -381,11 +356,13 @@ function hairDown()
 }
 function eyesOver()
 {
-
+    eyes.fill = "#ff00000";
+    eyes.stroke = "#ff0000";
 }
 function eyesOut()
 {
-
+    eyes.fill = "#ffffff";
+    eyes.stroke = "#ffffff";
 }
 function eyesDown()
 {
@@ -394,11 +371,13 @@ function eyesDown()
 }
 function faceOver()
 {
-
+    face.fill = "#00ff00";
+    face.stroke = "#00ff00"
 }
 function faceOut()
 {
-
+    face.fill = "#ffffff";
+    face.stroke = "#ffffff";
 }
 function faceDown()
 {
@@ -407,11 +386,13 @@ function faceDown()
 }
 function weaponOver()
 {
-
+    weapon.fill = "#ffff00";
+    weapon.stroke = "#ffff00"
 }
 function weaponOut()
 {
-
+    weapon.fill = "#ffffff";
+    weapon.stroke = "#ffffff";
 }
 function weaponDown()
 {
