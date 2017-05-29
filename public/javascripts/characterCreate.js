@@ -1,3 +1,4 @@
+var classSpec;
 var characterCreate = {
     preload: function(){
         log('characterCreate','entered state');
@@ -32,16 +33,47 @@ var characterCreate = {
 
         graphics.lineStyle(3, 0xEFF1ED, 0.7);
         graphics.beginFill(0xEFF1ED, 0.6);
-
         // draw class selection
         graphics.moveTo(50,50);
         graphics.lineTo(425,50);
         graphics.lineTo(425,200);
         graphics.lineTo(50,200);
         graphics.endFill();
+        //add the class and keeps it in the center as well
+        classSpec = game.add.text(0, 0, classes.classes[0], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        classSpec.setTextBounds(50, 50, 425, 200);
+        //adding action to the arrows
+        var larrow = game.add.graphics(0,0);
+        larrow.lineStyle(2, 0xde3c4b, 1);
+        larrow.beginFill(0xde3c4b, 0.6);
+        var point1 = 320 + 2;
+        var point2 = 320 + 50;
+        var point3 = 320 + 25;
+        larrow.moveTo(68,point1);
+        larrow.lineTo(68,point2);
+        larrow.lineTo(68-15,point3);
+        larrow.inputEnabled = true;
+        larrow.events.onInputDown.add(preClass, this);
 
-        arrowGenerator(300, 48, "l" );
-        arrowGenerator(300, 428, "r" );
+        larrow.events.onInputOver.add(preClassOver, this);
+        larrow.events.onInputOut.add(preClassOut, this);
+        larrow.endFill();
+        var rarrow = game.add.graphics(0,0);
+        rarrow.lineStyle(2, 0xde3c4b, 1);
+        rarrow.beginFill(0xde3c4b, 0.6);
+        rarrow.moveTo(448,point1);
+        rarrow.lineTo(448,point2);
+        rarrow.lineTo(448+15,point3);
+        rarrow.inputEnabled = true;
+        rarrow.events.onInputDown.add(nextClass, this);
+
+        rarrow.events.onInputOver.add(nextClassOver, this);
+        rarrow.events.onInputOut.add(nextClassOut, this);
+        rarrow.endFill();
+
+
+       // arrowGenerator(300,48, "l" );
+       // arrowGenerator(300, 428, "r" );
 
         // draw a rectangle for character create
         graphics.lineStyle(2, 0x0000FF, 1);
@@ -125,4 +157,144 @@ var characterCreate = {
     update : function() {
 
     },
+};
+var classIndex = 0;
+
+function preClass() {
+    console.log("in pre class ");
+    classSpec.destroy();
+    classIndex--;
+    if (classIndex > 0 )
+    {
+        classSpec = game.add.text(0, 0, classes.classes[classIndex], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        classSpec.setTextBounds(50, 50, 425, 200);
+    }
+    else if (classIndex <= 0)
+    {
+        classIndex = 0;
+        classSpec = game.add.text(0, 0, classes.classes[classIndex], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        classSpec.setTextBounds(50, 50, 425, 200);
+    }
 }
+function nextClass() {
+    console.log("in next class ");
+    classSpec.destroy();
+    classIndex++;
+
+    console.log( classes.classes.length + " Length on the class");
+
+    if (classIndex < classes.classes.length )
+    {
+        classSpec = game.add.text(0, 0, classes.classes[classIndex], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        classSpec.setTextBounds(50, 50, 425, 200);
+    }
+    else if (classIndex >= classes.classes.length)
+    {
+        classSpec = game.add.text(0, 0, classes.classes[classes.classes.length-1], { font: "30pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" });
+        classSpec.setTextBounds(50, 50, 425, 200);
+        classIndex = classes.classes.length-1;
+    }
+}
+
+function over(cord, x, side){
+    var arrow = game.add.graphics(0,0);
+    arrow.lineStyle(2, 0xFB651D, 1);
+    arrow.beginFill(0xFB651D, 0.6);
+
+    var point1 = 320 + 2;
+    var point2 = 320 + 50;
+    var point3 = 320 + 25;
+    if (side == "l")
+    {
+
+        arrow.moveTo(68,point1);
+        arrow.lineTo(68,point2);
+        arrow.lineTo(68-15,point3);
+    }else{
+        arrow.moveTo(x,point1);
+        arrow.lineTo(x,point2);
+        arrow.lineTo(x+15,point3);
+    }
+    arrow.endFill();
+}
+function out(cord, x, side){
+    var arrow = game.add.graphics(0,0);
+    arrow.lineStyle(2, 0xde3c4b, 1);
+    arrow.beginFill(0xde3c4b, 0.6);
+
+    var point1 = 320 + 2;
+    var point2 = 320 + 50;
+    var point3 = 320 + 25;
+    if (side == "l")
+    {
+
+        arrow.moveTo(68,point1);
+        arrow.lineTo(68,point2);
+        arrow.lineTo(68-15,point3);
+    }else{
+        arrow.moveTo(x,point1);
+        arrow.lineTo(x,point2);
+        arrow.lineTo(x+15,point3);
+    }
+    arrow.endFill();
+}
+function nextClassOver() {
+    over(320,448,"r");
+}
+function preClassOver() {
+    over(320,68,"l");
+
+}
+function nextClassOut() {
+    out(320,448,"r");
+}
+function preClassOut() {
+    out(320,68,"l");
+
+}
+var classes = {
+    class: {
+        soldier: {
+            specialization: "Gaurdian",
+            hp: 190,
+            def: 200,
+            sDef: 190,
+            atk: 110,
+            sAtk: 90,
+            sta: 40,
+            mna: 40,
+            prc: 40,
+            hea: 70,
+            buf: 50,
+            con: 80
+        },
+        Mercenary: {
+            specialization: "Assassin",
+            hp: 190,
+            def: 200,
+            sDef: 190,
+            atk: 110,
+            sAtk: 90,
+            sta: 40,
+            mna: 40,
+            prc: 40,
+            hea: 70,
+            buf: 50,
+            con: 80
+        },
+        BlackMage: {
+            specialization: "Summoner",
+            hp: 190,
+            def: 200,
+            sDef: 190,
+            atk: 110,
+            sAtk: 90,
+            sta: 40,
+            mna: 40,
+            prc: 40,
+            hea: 70,
+            buf: 50,
+            con: 80
+        }
+    }
+};
