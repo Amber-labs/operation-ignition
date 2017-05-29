@@ -1,7 +1,6 @@
 var classSpec;
 var hair, eyes, face, weapons;
 var style = { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
-
 var characterCreate = {
     preload: function(){
         log('characterCreate','entered state');
@@ -97,6 +96,7 @@ var characterCreate = {
         weaponTab();
         hairTab();
         TabText();
+        tabLayout();
 
         window.graphics = graphics;
 
@@ -169,17 +169,68 @@ function TabText()
 function tabLayout()
 {
     var hairTAB = game.add.graphics(20,20);
-    // Hair Tab
-    hairTAB.beginFill(0xDE3C4B);
-    hairTAB.lineStyle(3, 0x9b2a34, 1);
-    hairTAB.moveTo(800,55);
-    hairTAB.lineTo(810, 15);
-    hairTAB.lineTo(900, 15);
-    hairTAB.lineTo(910, 55);
-    // graphics.lineTo(1010, 55);
-    hairTAB.lineTo(game.width-65, 55);
-    hairTAB.lineTo(game.width-65, game.height - 65);
-    hairTAB.lineTo(800, game.height - 65);
+    // Display box
+    hairTAB.lineStyle(3, 0xffffff, 1);
+    hairTAB.moveTo(810,75);
+    hairTAB.lineTo(game.width-75, 75);
+    hairTAB.lineTo(game.width-75, 220);
+    hairTAB.lineTo(810, 220);
+    hairTAB.lineTo(810, 75);
+    // items
+
+    hairTAB.moveTo(830,250);
+    hairTAB.lineTo(930, 250);
+    hairTAB.lineTo(930, 350);
+    hairTAB.lineTo(830, 350);
+    hairTAB.lineTo(830, 250);
+
+    hairTAB.moveTo(950,250);
+    hairTAB.lineTo(1050, 250);
+    hairTAB.lineTo(1050, 350);
+    hairTAB.lineTo(950, 350);
+    hairTAB.lineTo(950, 250);
+
+    hairTAB.moveTo(1070,250);
+    hairTAB.lineTo(1170, 250);
+    hairTAB.lineTo(1170, 350);
+    hairTAB.lineTo(1070, 350);
+    hairTAB.lineTo(1070, 250);
+
+    hairTAB.moveTo(830,370);
+    hairTAB.lineTo(930, 370);
+    hairTAB.lineTo(930, 470);
+    hairTAB.lineTo(830, 470);
+    hairTAB.lineTo(830, 370);
+
+    hairTAB.moveTo(950,370);
+    hairTAB.lineTo(1050, 370);
+    hairTAB.lineTo(1050, 470);
+    hairTAB.lineTo(950, 470);
+    hairTAB.lineTo(950, 370);
+
+    hairTAB.moveTo(1070,370);
+    hairTAB.lineTo(1170, 370);
+    hairTAB.lineTo(1170, 470);
+    hairTAB.lineTo(1070, 470);
+    hairTAB.lineTo(1070, 370);
+
+    hairTAB.moveTo(830,490);
+    hairTAB.lineTo(930, 490);
+    hairTAB.lineTo(930, 590);
+    hairTAB.lineTo(830, 590);
+    hairTAB.lineTo(830, 490);
+
+    hairTAB.moveTo(950,490);
+    hairTAB.lineTo(1050, 490);
+    hairTAB.lineTo(1050, 590);
+    hairTAB.lineTo(950, 590);
+    hairTAB.lineTo(950, 490);
+
+    hairTAB.moveTo(1070,490);
+    hairTAB.lineTo(1170, 490);
+    hairTAB.lineTo(1170, 590);
+    hairTAB.lineTo(1070, 590);
+    hairTAB.lineTo(1070, 490);
     hairTAB.endFill();
 }
 function hairTab()
@@ -192,7 +243,6 @@ function hairTab()
     hairTAB.lineTo(810, 15);
     hairTAB.lineTo(900, 15);
     hairTAB.lineTo(910, 55);
-    // graphics.lineTo(1010, 55);
     hairTAB.lineTo(game.width-65, 55);
     hairTAB.lineTo(game.width-65, game.height - 65);
     hairTAB.lineTo(800, game.height - 65);
@@ -352,7 +402,7 @@ function hairOut()
 function hairDown()
 {
     console.log("hair");
-    eyeTab(); faceTab(); weaponTab(); hairTab(); TabText();
+    eyeTab(); faceTab(); weaponTab(); hairTab(); TabText(); tabLayout();
 }
 function eyesOver()
 {
@@ -367,7 +417,7 @@ function eyesOut()
 function eyesDown()
 {
     console.log("eyes");
-    hairTab();  faceTab(); weaponTab(); eyeTab(); TabText();
+    hairTab();  faceTab(); weaponTab(); eyeTab(); TabText();tabLayout();
 }
 function faceOver()
 {
@@ -382,7 +432,7 @@ function faceOut()
 function faceDown()
 {
     console.log("face");
-    hairTab(); eyeTab();  weaponTab();  faceTab(); TabText();
+    hairTab(); eyeTab();  weaponTab();  faceTab(); TabText();tabLayout();
 }
 function weaponOver()
 {
@@ -397,7 +447,7 @@ function weaponOut()
 function weaponDown()
 {
     console.log("weapon");
-    hairTab(); eyeTab();  faceTab(); weaponTab(); TabText();
+    hairTab(); eyeTab();  faceTab(); weaponTab(); TabText();tabLayout();
 }
 var classes = {
     class: {
