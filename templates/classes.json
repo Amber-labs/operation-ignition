@@ -3,26 +3,31 @@
     {
       "name":"Solider",
       "label":"Soldier",
+      "icon":"/images/classes/soldier.png",
       "weapons":[]
     },
     {
       "name":"Mercenary",
       "label":"Mercenary",
+      "icon":"/images/classes/mercenary.png",
       "weapons":[]
     },
     {
       "name":"BlackMage",
       "label":"Black mage",
+      "icon":"/images/classes/blackMage.png",
       "weapons":[]
     },
     {
       "name":"Ranger",
       "label":"Ranger",
+      "icon":"/images/classes/ranger.png",
       "weapons":[]
     },
     {
       "name":"Whitemage",
       "label":"White mage",
+      "icon":"/images/classes/whiteMage.png",
       "weapons":[]
     }
   ]
