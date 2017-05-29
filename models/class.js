@@ -15,10 +15,11 @@ Class.findOne({}, function(error, doc){
     else
     {
         //if database is empty
-        if (!doc)
+        //if (!doc)
         {
             //read the game classes file
             fs.readFile('templates/classes.json', 'utf-8', function(error, data){
+            Class.collection.drop();
                 if (error)
                     return console.log(error);
                 //store to db
@@ -28,7 +29,6 @@ Class.findOne({}, function(error, doc){
                     var classes = new Class({
                         classes: file.classes
                     });
-                    console.log(classes);
                     classes.save(function (error, classes){
                         if (error)
                             throw error;

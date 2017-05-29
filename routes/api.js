@@ -27,22 +27,103 @@ router.post('/players/data', function (req, res, next) {
         //validate player changes
             //save player updates
 
+        //for now player starting equipment and inventory are hard coded in potentially could be loaded from external file
         if (!player.created)
         {
-                player.class = req.body.player.class;
+            player.class = req.body.class;
+            player.appearance = req.body.appearance;
+            player.inventory = [
+                "potion",
+                "potion",
+                "potion"
+            ];
+            switch (player.class)
+            {
+                case "Solider":
+                    player.equipment.weapon = {
+                        name: 'Basic Long Sword',
+                        icon: 'basicLongSword.png',
+                        level: 1,
+                        stats: {
+                            levelRequirement: 1,
+                            attack: 1,
+                            specialAttack: 1,
+                            defence: 1,
+                            specialDefence: 1
+                        }
+                    }
+                    break;
+                case "Mercenary":
+                    player.equipment.weapon = {
+                        name: 'Basic Short Sword',
+                        icon: 'basicShortSword.png',
+                        level: 1,
+                        stats: {
+                            levelRequirement: 1,
+                            attack: 1,
+                            specialAttack: 1,
+                            precision: 1,
+                            stamina: 1
+                        }
+                    }
+                    break;
+                case "Black Mage":
+                    player.equipment.weapon = {
+                        name: 'Basic Wand',
+                        icon: 'basicStaff.png',
+                        level: 1,
+                        stats: {
+                            levelRequirement: 1,
+                            attack: 1,
+                            specialAttack: 1,
+                            mana: 1,
+                            condition: 1
+                        }
+                    }
+                    break;
+                case "Ranger":
+                    player.equipment.weapon = {
+                        name: 'Basic Bow',
+                        icon: 'basicBow.png',
+                        level: 1,
+                        stats: {
+                            levelRequirement: 1,
+                            attack: 1,
+                            specialAttack: 1,
+                            precision: 1,
+                            condition: 1
+                        }
+                    }
+                    break;
+                case "White Mage":
+                    player.equipment.weapon = {
+                        name: 'Basic Staff',
+                        icon: 'basicSword.png',
+                        level: 1,
+                        stats: {
+                            levelRequirement: 1,
+                            attack: 1,
+                            specialAttack: 1,
+                            buff: 1,
+                            healing: 1
+                        }
+                    }
+                    break;
+            }
         }
         else
         {
             if (req.body.player.specialization)
-                player.specialization = req.body.player.specialization;
+                player.specialization = req.body.specialization;
             //player validation
-            player.level = req.body.player.level;
-            player.experience = req.body.player.experience;
-            player.stats = req.body.player.stats;
-            player.equipment = req.body.player.equipment;
+            player.level = req.body.level;
+            player.experience = req.body.experience;
+            player.stats = req.body.stats;
+            player.equipment = req.body.equipment;
+            player.inventory = req.body.inventory;
         }
         player.save();
-        console.log(req.body);
+        console.log(player);
     });
 });
 

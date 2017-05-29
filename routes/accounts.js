@@ -110,20 +110,42 @@ router.post('/register', function (req, res, next) {
   }
 });
 
-/* GET accounts login */
+/* GET accounts login page */
 router.get('/login', function (req, res, next) {
   res.render('login', {title:'Log in'});
 });
 
-/* POST accounts login */
-router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/accounts/register', failureFlash: true}), function(req, res) {
+/* POST accounts login
+* Authenticate and/or login session
+*/
+router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/accounts/register', failureFlash: true }), function(req, res) {
     res.redirect('/');
 });
 
-/* GET accounts logout */
+/* GET accounts logout
+* Logout users session
+*/
 router.get('/logout',function (req, res){
     req.logout();
     res.redirect('/accounts/login');
+});
+
+/* GET accounts admin page */
+router.get('/admin', ensureAuthenticated, function (req, res) {
+    User.getUserByUsername(req.user.username, function (error, doc){
+        if (error)
+            res.render('error', error);
+        else
+        {
+            console.log("doc: "+doc);
+            //user exists and is admin account render the admin account
+            if (typeof doc != 'undefined' && doc.admin)
+                res.render('admin', {title: 'Admin - '+doc.username});
+            //redirect to home/root as they may or may not be logged in
+            else
+                res.redirect('/');
+        }
+    })
 });
 
 passport.use(new LocalStrategy(
@@ -157,6 +179,15 @@ passport.deserializeUser(function(id, done) {
     User.getUserById(id, function(err, user) {
         done(err, user);
     });
-})
+});
+
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    } else {
+        //req.flash('error_msg', 'You are not logged in');
+        res.redirect('/users/login');
+    }
+}
 
 module.exports = router;

@@ -1,1 +1,29 @@
-{"classes":["Solider","Mercenary","Black Mage","Ranger","Support mage"]}
+{
+  "classes": [
+    {
+      "name":"Solider",
+      "label":"Soldier",
+      "weapons":[]
+    },
+    {
+      "name":"Mercenary",
+      "label":"Mercenary",
+      "weapons":[]
+    },
+    {
+      "name":"BlackMage",
+      "label":"Black mage",
+      "weapons":[]
+    },
+    {
+      "name":"Ranger",
+      "label":"Ranger",
+      "weapons":[]
+    },
+    {
+      "name":"Whitemage",
+      "label":"White mage",
+      "weapons":[]
+    }
+  ]
+}

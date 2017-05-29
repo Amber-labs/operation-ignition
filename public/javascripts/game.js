@@ -12,7 +12,7 @@ $.ajax({
     type: 'GET',
     success: function (doc)
     {
-        log('getClasses', JSON.stringify(doc));
+        log('classes', JSON.stringify(doc));
         classes = doc;
     }
 });
@@ -35,9 +35,3 @@ game.state.add('credit', credit);
 */
 
 game.state.start('boot');
-
-//standard log to console
-function log(tag, message)
-{
-    console.log("["+tag+"] : "+message);
-}

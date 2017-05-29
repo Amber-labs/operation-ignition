@@ -15,7 +15,7 @@ block multiscripts
     //Ignite stylesheet
     link(rel='stylesheet', href='/stylesheets/style.css')
     //Retrieves player data
-    script(type='text/javascript' src='/javascripts/playerData.js')
+    script(type='text/javascript' src='/javascripts/utils.js')
 
 block navigation
     nav
@@ -23,8 +23,11 @@ block navigation
             div.row
                 ul(class='nav nav-pills pull-right')
                     if user
+                        +nav-bullet('home','/')
                         +nav-bullet('logout','/accounts/logout')
                         +nav-bullet('account','/accounts')
+                        if (user.admin)
+                            +nav-bullet('admin','/accounts/admin')
                     else
                         +nav-bullet('login','/accounts/login')
                         +nav-bullet('sign up','/accounts/register')
@@ -47,20 +50,36 @@ mixin title(name)
 mixin form(feilds, action)
     form(method='post' action= action)
         each field in feilds
-            +input(field)
+            +label(field.label)
+            +input(field.input)
         +input('submit','button')
 
-mixin input(name, type)
+mixin label(label)
+    div.col-xs-12
+        label= label
+
+mixin input(input, type)
     div.form-group
         case type
             when 'button'
                 div.col-xs-12.center
-                    button(id='submit_login', type='submit', class='btn btn-sm')= name
+                    button(id='submit_login', type='submit', class='btn btn-sm')= input
             default
                 div.col-xs-12
-                    label= name
-                div.col-xs-12
-                    input(type='text' class='form-control' placeholder= name, name= name)
+                    if input && input.placeholder
+                        input(type='text' class='form-control' placeholder= input.placeholder, name= input.name)
+                    else
+                        input(type='text' class='form-control' placeholder='Not set', name= input.name)
+
+mixin modal(name)
+    div(id= name class='container' type='modal')
+        div(class= name+'ModalContent' type='modalContent')
+            div(type='modalHeader')
+                span(type='modalClose' class= name) &times;
+                h2= 'Edit '+name
+            div.modalForm
+                textarea(class='form' name= name type='text' placeholder=name cols='6')= name
+
 block errors
     if errors
         div(class='alert alert-danger')

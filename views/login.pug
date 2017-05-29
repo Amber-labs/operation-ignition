@@ -6,5 +6,21 @@ block content
             div.row
                 +title('Log in')
             div.row
-                +form(['username','password'],'/accounts/login')
+                +form(
+                [
+                    {
+                        label: 'Username',
+                        input: {
+                            placeholder:'Username',
+                            name: 'username'
+                        }
+                    },
+                    {
+                        label: 'Password',
+                        input: {
+                            placeholder:'Password',
+                            name: 'password'
+                        }
+                    }
+                ],'/accounts/login')
 
