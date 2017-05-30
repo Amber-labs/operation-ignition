@@ -32,7 +32,7 @@ var characterCreate = {
         graphics.lineTo(15,100);
         graphics.endFill();
         //add the class and keeps it in the center as well
-        classSpec = game.add.text(20, 20, classes.classes[0], style);
+        classSpec = game.add.text(20, 20, classes.classes[0].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
         //adding action to the arrows
         var larrow = game.add.graphics(0,0);
@@ -303,13 +303,13 @@ function preClass() {
     classIndex--;
     if (classIndex > 0 )
     {
-        classSpec = game.add.text(20, 20, classes.classes[classIndex], style);
+        classSpec = game.add.text(20, 20, classes.classes[classIndex].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
     }
     else if (classIndex <= 0)
     {
         classIndex = 0;
-        classSpec = game.add.text(20, 20, classes.classes[classIndex], style);
+        classSpec = game.add.text(20, 20, classes.classes[classIndex].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
     }
 }
@@ -322,12 +322,12 @@ function nextClass() {
 
     if (classIndex < classes.classes.length )
     {
-        classSpec = game.add.text(20, 20, classes.classes[classIndex], style);
+        classSpec = game.add.text(20, 20, classes.classes[classIndex].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
     }
     else if (classIndex >= classes.classes.length)
     {
-        classSpec = game.add.text(20, 20, classes.classes[classes.classes.length-1], style);
+        classSpec = game.add.text(20, 20, classes.classes[classes.classes.length-1].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
         classIndex = classes.classes.length-1;
     }
