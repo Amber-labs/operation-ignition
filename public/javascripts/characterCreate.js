@@ -1,10 +1,18 @@
 var classSpec;
-var hair, eyes, face, weapons;
+var hair, eyes, face, weapon;
+var sol, blac,whit;
+
 var style = { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
 var characterCreate = {
     preload: function(){
         log('characterCreate','entered state');
         this.load.image('okay','/images/buttons/okay.png');
+        this.load.image('soldier','/images/Player/characters/soldier.png');
+        this.load.image('blackmage','/images/Player/characters/balckMage.png');
+        this.load.image('whitemage','/images/Player/characters/whitemage.png');
+        this.load.image('ranger','/images/Player/characters/ranger.jpeg');
+        this.load.image('mercenary','/images/Player/characters/mercenary.jpeg');
+
     },
     buttons : {},
     create: function() {
@@ -22,7 +30,8 @@ var characterCreate = {
         graphics.lineTo(400,game.height - 65);
         graphics.lineTo(25,game.height - 65);
         graphics.endFill();
-
+        sol = game.add.image(50,150, 'soldier');
+        sol.scale.setTo(0.3);
         graphics.lineStyle(3, 0xEFF1ED, 0.5);
         graphics.beginFill(0xEFF1ED, 0.0);
         // draw class selection
@@ -177,7 +186,6 @@ function tabLayout()
     hairTAB.lineTo(810, 220);
     hairTAB.lineTo(810, 75);
     // items
-
     hairTAB.moveTo(830,250);
     hairTAB.lineTo(930, 250);
     hairTAB.lineTo(930, 350);
@@ -296,18 +304,56 @@ function weaponTab()
     weaponTAB.lineTo(800, game.height - 65);
     weaponTAB.endFill();
 }
+function classDisplay(){
+    if(classIndex <= 0)
+    {
+        console.log(classIndex);
+        sol = game.add.image(50,150, 'soldier');
+        sol.scale.setTo(0.3);
+    }
+    else if (classIndex == 1)
+    {
+        console.log(classIndex);
+        sol = game.add.image(50,150, 'mercenary');
+        sol.scale.setTo(0.3);
+    }
+    else if (classIndex == 2)
+    {
+        console.log(classIndex);
 
+        sol = game.add.image(50,150, 'blackmage');
+        sol.scale.setTo(0.4);
+    }
+    else if(classIndex == 3)
+    {
+        console.log(classIndex);
+
+        sol = game.add.image(50,150, 'ranger');
+        sol.scale.setTo(0.3);
+    }
+    else if (classIndex >= 4)
+    {
+        console.log(classIndex);
+
+        sol = game.add.image(50,150, 'whitemage');
+        sol.scale.setTo(0.3);
+    }
+}
 function preClass() {
     console.log("in pre class ");
     classSpec.destroy();
     classIndex--;
     if (classIndex > 0 )
     {
+        sol.destroy();
+        classDisplay();
         classSpec = game.add.text(20, 20, classes.classes[classIndex].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
     }
     else if (classIndex <= 0)
     {
+        sol.destroy();
+        classDisplay();
         classIndex = 0;
         classSpec = game.add.text(20, 20, classes.classes[classIndex].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
@@ -322,11 +368,15 @@ function nextClass() {
 
     if (classIndex < classes.classes.length )
     {
+        sol.destroy();
+        classDisplay();
         classSpec = game.add.text(20, 20, classes.classes[classIndex].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
     }
     else if (classIndex >= classes.classes.length)
     {
+        sol.destroy();
+        classDisplay();
         classSpec = game.add.text(20, 20, classes.classes[classes.classes.length-1].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
         classIndex = classes.classes.length-1;
