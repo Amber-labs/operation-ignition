@@ -1,5 +1,6 @@
 var classSpec;
-var hair, eyes, face, weapon;
+var hair, eyes, face, body;
+var bh, be, bf, bb;
 var sol;
 var style = { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
 var tabStyle = { font: "15pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
@@ -93,14 +94,22 @@ var images = {
         },
         {
             name: "face1",
-            icon: '/images/Player/faces/templateFace1.jpg'
+            icon: '/images/Player/faces/templateFace2.jpg'
         },
         {
             name: "face1",
-            icon: '/images/Player/faces/templateFace1.jpg'
+            icon: '/images/Player/faces/templateFace3.jpg'
+        }
+    ],
+    "body" : [
+        {
+            name: "body1",
+            icon: '/images/Player/Body/templateBody1.png'
         }
     ]
 }
+
+
 
 var characterCreate = {
     preload: function(){
@@ -146,6 +155,10 @@ var characterCreate = {
         {
             this.load.image(images.face[i].name ,images.face[i].icon);
         }
+        for(i=0; i<images.body.length; i++)
+        {
+            this.load.image(images.body[i].name ,images.body[i].icon);
+        }
 
     },
     buttons : {},
@@ -184,9 +197,15 @@ var characterCreate = {
         arrows(940, 435, "l", FLdown, FLover, FLout, 0xffffff);
         arrows(1200, 435, "r", FRdown, FRover, FRout, 0xffffff);
 
+
+
+        bb = game.add.group();
+        body = bb.create(470,25, images.body[0].name);
+        body.scale.setTo(0.7);
         hairDisplay();
         eyesDisplay();
         faceDisplay();
+        game.add.tween(bb.scale).to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false).yoyo(true);
 
         window.graphics = graphics;
         buttons = game.add.group();
@@ -272,18 +291,27 @@ function hairDisplay()
 {
     hair = game.add.image(1015,55, images.hair[hairindex].name);
     hair.scale.setTo(0.4);
+    bh = bb.create(500,55, images.hair[hairindex].name);
+    bh.scale.setTo(0.4);
+    player.appearance.head.hair = images.hair[hairindex].name;
 }
 var eyeindex = 0;
 function eyesDisplay()
 {
     eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
     eyes.scale.setTo(0.1);
+    be = bb.create(550, 55, images.eyes[eyeindex].name);
+    be.scale.setTo(0.1);
+    player.appearance.head.eye = images.eyes[eyeindex].name;
 }
 var faceindex = 0;
 function faceDisplay()
 {
     face = game.add.image(1015, 415, images.face[faceindex].name);
     face.scale.setTo(0.1);
+    bf = bb.create(600, 55, images.face[faceindex].name);
+    bf.scale.setTo(0.1);
+    player.appearance.head.face = images.face[faceindex].name;
 }
 var classIndex = 0;
 function classDisplay(){
@@ -292,26 +320,30 @@ function classDisplay(){
         console.log(classIndex);
         sol = game.add.image(50,150, 'soldier');
         sol.scale.setTo(0.3);
+        player.classes = "soldier";
     }
     else if (classIndex == 1)
     {
         console.log(classIndex);
         sol = game.add.image(50,150, 'mercenary');
         sol.scale.setTo(0.3);
-}
-else if (classIndex == 2)
-{
-    console.log(classIndex);
+        player.classes = "mercenary";
+    }
+    else if (classIndex == 2)
+    {
+        console.log(classIndex);
 
-    sol = game.add.image(50,150, 'blackmage');
-    sol.scale.setTo(0.4);
-}
+        sol = game.add.image(50,150, 'blackmage');
+        sol.scale.setTo(0.4);
+        player.classes = "blackmage";
+    }
     else if(classIndex == 3)
     {
         console.log(classIndex);
 
         sol = game.add.image(50,150, 'ranger');
         sol.scale.setTo(0.3);
+        player.classes = "ranger";
     }
     else if (classIndex >= 4)
     {
@@ -319,6 +351,7 @@ else if (classIndex == 2)
 
         sol = game.add.image(50,150, 'whitemage');
         sol.scale.setTo(0.3);
+        player.classes = "whitemage";
     }
 }
 function preClass() {
@@ -447,22 +480,31 @@ function HLdown(){
     hairindex--;
     if(hairindex<=0)
     {
+        bh.destroy();
         hairindex = 0;
         hair = game.add.image(1015,55, images.hair[hairindex].name);
         hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
     }
     else if (hairindex >= images.hair.length)
     {
+        bh.destroy();
         hairindex = images.hair.length -1;
         hair = game.add.image(1015,55, images.hair[hairindex].name);
         hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
     }
     else
     {
+        bh.destroy();
         hair = game.add.image(1015,55, images.hair[hairindex].name);
         hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
     }
-
+    player.appearance.head.hair = images.hair[hairindex].name;
 }
 function HLover(){
     console.log("In hair L over");
@@ -478,16 +520,22 @@ function HRdown(){
     hairindex++;
    if (hairindex >= images.hair.length)
     {
+        bh.destroy();
         hairindex = images.hair.length -1;
         hair = game.add.image(1015,55, images.hair[hairindex].name);
         hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
     }
     else
     {
+        bh.destroy();
         hair = game.add.image(1015,55, images.hair[hairindex].name);
         hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
     }
-
+    player.appearance.head.hair = images.hair[hairindex].name;
 }
 function HRover(){
     console.log("In hair R over");
@@ -507,18 +555,25 @@ function ELdown(){
         eyeindex = 0;
         eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
         eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
     }
     else if (eyeindex >= images.eyes.length)
     {
         eyeindex = images.eyes.length -1;
         eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
         eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
     }
     else
     {
         eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
         eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
     }
+    player.appearance.head.eye = images.eyes[eyeindex].name;
 
 }
 function ELover(){
@@ -538,12 +593,17 @@ function ERdown(){
         eyeindex = images.eyes.length -1;
         eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
         eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
     }
     else
     {
         eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
         eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
     }
+    player.appearance.head.eye = images.eyes[eyeindex].name;
 
 }
 function ERover(){
@@ -564,18 +624,26 @@ function FLdown(){
         faceindex = 0;
         face = game.add.image(1015, 415, images.face[faceindex].name);
         face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
     }
     else if (faceindex >= images.face.length)
     {
         faceindex = images.face.length -1;
         face = game.add.image(1015, 415, images.face[faceindex].name);
         face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
     }
     else
     {
         face = game.add.image(1015, 415, images.face[faceindex].name);
-        face.scale.setTo(0.1);
+        face.scale.setTo(0.05);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.11);
     }
+    player.appearance.head.face = images.face[faceindex].name;
+
 }
 function FLover(){
     console.log("In face L over");
@@ -592,12 +660,18 @@ function FRdown(){
         faceindex = images.face.length -1;
         face = game.add.image(1015, 415, images.face[faceindex].name);
         face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
     }
     else
     {
         face = game.add.image(1015, 415, images.face[faceindex].name);
         face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
     }
+    player.appearance.head.face = images.face[faceindex].name;
+
 }
 function FRover(){
     console.log("In face R over");
