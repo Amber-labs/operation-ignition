@@ -1,17 +1,164 @@
 var classSpec;
-var hair, eyes, face, weapon;
-var sol, blac,whit;
-
+var hair, eyes, face, body;
+var bh, be, bf, bb;
+var sol;
 var style = { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
+var tabStyle = { font: "15pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
+var images = {
+    "classes" :[
+        {
+            name: "soldier",
+            icon: '/images/Player/characters/soldier.png'
+        },
+        {
+            name: "blackmage",
+            icon: '/images/Player/characters/balckMage.png'
+        },
+        {
+            name: "whitemage",
+            icon: '/images/Player/characters/whitemage.png'
+        },
+        {
+            name: "ranger",
+            icon: '/images/Player/characters/ranger.jpeg'
+        },
+        {
+            name: "mercenary",
+            icon: '/images/Player/characters/mercenary.jpeg'
+        }
+    ],
+    "hair" : [
+        {
+            name: "hair1",
+            icon: '/images/Player/hair/templateHair1.png'
+        },
+        {
+            name: "hair2",
+            icon: '/images/Player/hair/templateHair2.png'
+        },
+        {
+            name: "hair3",
+            icon: '/images/Player/hair/templateHair3.png'
+        },
+        {
+            name: "hair4",
+            icon: '/images/Player/hair/templateHair4.png'
+        },
+        {
+            name: "hair5",
+            icon: '/images/Player/hair/templateHair5.png'
+        },
+        {
+            name: "hair6",
+            icon: '/images/Player/hair/templateHair6.png'
+        },
+        {
+            name: "hair7",
+            icon: '/images/Player/hair/templateHair7.png'
+        },
+        {
+            name: "hair8",
+            icon: '/images/Player/hair/templateHair8.png'
+        },
+        {
+            name: "hair9",
+            icon: '/images/Player/hair/templateHair9.png'
+        }
+    ],
+    "eyes" : [
+        {
+            name: "eye1",
+            icon: '/images/Player/eyes/templateEyes1.png'
+        },
+        {
+            name: "eye2",
+            icon: '/images/Player/eyes/templateEyes2.png'
+        },
+        {
+            name: "eye3",
+            icon: '/images/Player/eyes/templateEyes3.png'
+        },
+        {
+            name: "eye4",
+            icon: '/images/Player/eyes/templateEyes4.png'
+        },
+        {
+            name: "eye5",
+            icon: '/images/Player/eyes/templateEyes5.png'
+        }
+    ],
+    "face" : [
+        {
+            name: "face1",
+            icon: '/images/Player/faces/templateFace1.jpg'
+        },
+        {
+            name: "face1",
+            icon: '/images/Player/faces/templateFace2.jpg'
+        },
+        {
+            name: "face1",
+            icon: '/images/Player/faces/templateFace3.jpg'
+        }
+    ],
+    "body" : [
+        {
+            name: "body1",
+            icon: '/images/Player/Body/templateBody1.png'
+        }
+    ]
+}
+
+
+
 var characterCreate = {
     preload: function(){
         log('characterCreate','entered state');
         this.load.image('okay','/images/buttons/okay.png');
+        // need to figure out how to load this images in a shorter manner (this is too repetative)
+        /*
         this.load.image('soldier','/images/Player/characters/soldier.png');
         this.load.image('blackmage','/images/Player/characters/balckMage.png');
         this.load.image('whitemage','/images/Player/characters/whitemage.png');
         this.load.image('ranger','/images/Player/characters/ranger.jpeg');
         this.load.image('mercenary','/images/Player/characters/mercenary.jpeg');
+        */
+        // hair
+        /*
+        this.load.image('one','/images/Player/hair/templateHair1.png');
+        this.load.image('two','/images/Player/hair/templateHair2.png');
+        this.load.image('three','/images/Player/hair/templateHair3.png');
+        this.load.image('four','/images/Player/hair/templateHair4.png');
+        this.load.image('five','/images/Player/hair/templateHair5.png');
+        this.load.image('six','/images/Player/hair/templateHair6.png');
+        this.load.image('seven','/images/Player/hair/templateHair7.png');
+        this.load.image('eight','/images/Player/hair/templateHair8.png');
+        this.load.image('nine','/images/Player/hair/templateHair9.png');
+        */
+        // loading class icons
+        for(i=0; i<images.classes.length; i++)
+        {
+            this.load.image(images.classes[i].name, images.classes[i].icon);
+        }
+        // loading hair icons
+        for(i=0; i<images.hair.length; i++)
+        {
+            this.load.image(images.hair[i].name, images.hair[i].icon);
+        }
+        //lading eyes icons
+        for(i=0; i<images.eyes.length; i++)
+        {
+            this.load.image(images.eyes[i].name ,images.eyes[i].icon);
+        }
+        //loading faces icons
+        for(i=0; i<images.face.length; i++)
+        {
+            this.load.image(images.face[i].name ,images.face[i].icon);
+        }
+        for(i=0; i<images.body.length; i++)
+        {
+            this.load.image(images.body[i].name ,images.body[i].icon);
+        }
 
     },
     buttons : {},
@@ -23,102 +170,52 @@ var characterCreate = {
         // set a fill and line style again
         graphics.lineStyle(3, 0xEFF1ED, 0.5);
         graphics.beginFill(0xA2A79E, 0.0);
+        graphics.drawRoundedRect(15,15,395,80,12);
+        graphics.drawRoundedRect(15,105,395,game.height - 150,12);
+        graphics.drawRoundedRect(25,game.height - 215,375,160,12);
+       graphics.endFill();
 
-        // draw class selection
-        graphics.moveTo(15,105);
-        graphics.lineTo(400,105);
-        graphics.lineTo(400,game.height - 65);
-        graphics.lineTo(25,game.height - 65);
-        graphics.endFill();
         sol = game.add.image(50,150, 'soldier');
-        sol.scale.setTo(0.3);
-        graphics.lineStyle(3, 0xEFF1ED, 0.5);
-        graphics.beginFill(0xEFF1ED, 0.0);
-        // draw class selection
-        graphics.moveTo(15,15);
-        graphics.lineTo(400,15);
-        graphics.lineTo(400,100);
-        graphics.lineTo(15,100);
-        graphics.endFill();
-        //add the class and keeps it in the center as well
+        sol.scale.setTo(0.2);
+
         classSpec = game.add.text(20, 20, classes.classes[0].name, style);
         classSpec.setTextBounds(15, 15, 400, 85);
-        //adding action to the arrows
-        var larrow = game.add.graphics(0,0);
-        larrow.lineStyle(2, 0xde3c4b, 1);
-        larrow.beginFill(0xde3c4b, 0.6);
-        var point1 = 320 + 2;
-        var point2 = 320 + 50;
-        var point3 = 320 + 25;
-        larrow.moveTo(68,point1);
-        larrow.lineTo(68,point2);
-        larrow.lineTo(68-15,point3);
-        larrow.inputEnabled = true;
-        larrow.events.onInputDown.add(preClass, this);
 
-        larrow.events.onInputOver.add(preClassOver, this);
-        larrow.events.onInputOut.add(preClassOut, this);
-        larrow.endFill();
-        var rarrow = game.add.graphics(0,0);
-        rarrow.lineStyle(2, 0xde3c4b, 1);
-        rarrow.beginFill(0xde3c4b, 0.6);
-        rarrow.moveTo(400,point1);
-        rarrow.lineTo(400,point2);
-        rarrow.lineTo(400+15,point3);
-        rarrow.inputEnabled = true;
-        rarrow.events.onInputDown.add(nextClass, this);
-
-        rarrow.events.onInputOver.add(nextClassOver, this);
-        rarrow.events.onInputOut.add(nextClassOut, this);
-        rarrow.endFill();
+        arrows(68, 300, "l", preClass, preClassOver, preClassOut, 0xde3c4b);
+        arrows(400, 300, "r", nextClass, nextClassOver, nextClassOut, 0xde3c4b);
 
 
-       // arrowGenerator(300,48, "l" );
-       // arrowGenerator(300, 428, "r" );
+        tabs(game.width-400, 25, "Hair", 80);
+        tabs(game.width-400, 200, "Eyes", 80);
+        tabs(game.width-400, 375, "Face", 80);
+        tabs(game.width-400, 550, "Weapons", 110);
 
-        function arrowGenerator(cord, x, side)
-        {
-            graphics.lineStyle(2, 0xde3c4b, 1);
-            graphics.beginFill(0xde3c4b, 0.6);
+        arrows(940, 85, "l", HLdown, HLover, HLout, 0xffffff);
+        arrows(1200, 85, "r", HRdown, HRover, HRout, 0xffffff);
+        arrows(940, 245, "l", ELdown, ELover, ELout, 0xffffff);
+        arrows(1200, 245, "r", ERdown, ERover, ERout, 0xffffff);
+        arrows(940, 435, "l", FLdown, FLover, FLout, 0xffffff);
+        arrows(1200, 435, "r", FRdown, FRover, FRout, 0xffffff);
 
-            var point1 = cord + 2;
-            var point2 = cord + 50;
-            var point3 = cord + 25;
-            if (side == "l")
-            {
-                graphics.moveTo(x,point1);
-                graphics.lineTo(x,point2);
-                graphics.lineTo(x-15,point3);
-            }
-            else{
-                graphics.moveTo(x,point1);
-                graphics.lineTo(x,point2);
-                graphics.lineTo(x+15,point3);
-            }
-            graphics.endFill();
-        }
 
-        //Test something to see if this idea will work
 
-        eyeTab();
-        faceTab();
-        weaponTab();
-        hairTab();
-        TabText();
-        tabLayout();
+        bb = game.add.group();
+        body = bb.create(470,25, images.body[0].name);
+        body.scale.setTo(0.7);
+        hairDisplay();
+        eyesDisplay();
+        faceDisplay();
+        game.add.tween(bb.scale).to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false).yoyo(true);
 
         window.graphics = graphics;
-
         buttons = game.add.group();
         var okayButton = game.make.button(game.width/2 , game.height - 100, 'okay', submitCharacter, this, 2, 1, 0);
         buttons.add(okayButton);
-
         //  You can either set the tab size in the style object:
         //var text = 'Welcome: '+player.username+"!\t" +
          //   "Level: "+player.level+
           //  "";
         // var displayText = game.add.text(100, 64, text, style);
-
         function submitCharacter()
         {
             console.log(player);
@@ -137,185 +234,100 @@ var characterCreate = {
             alert('Submited');
         }
 
-
-
     },
     update : function() {
 
     },
 };
-var classIndex = 0;
-function TabText()
-{
-    hair = game.add.text(20, 20, "Hair" ,{ font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" } );
-    hair.setTextBounds(800, 17, 110, 40);
-    hair.inputEnabled = true;
-    hair.events.onInputOver.add(hairOver,this);
-    hair.events.onInputOut.add(hairOut,this);
-    hair.events.onInputDown.add(hairDown,this);
+function arrows(x, y, side, down, over, out, color) {
+    var arrows =  game.add.graphics(0,0);
+    arrows.lineStyle(2, color, 1);
+    arrows.beginFill(color, 1);
+    var point1 = y + 2;
+    var point2 = y + 50;
+    var point3 = y + 25;
+    if (side == "l")
+    {
+        arrows.moveTo(x,point1);
+        arrows.lineTo(x,point2);
+        arrows.lineTo(x-15,point3);
+        arrows.lineTo(x,point1);
+    }
+    else
+    {
+        arrows.moveTo(x,point1);
+        arrows.lineTo(x,point2);
+        arrows.lineTo(x+15,point3);
+        arrows.lineTo(x,point1);
+    }
+    arrows.inputEnabled = true;
+    arrows.events.onInputDown.add(down, this);
 
-    eyes = game.add.text(20, 20, "Eyes" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
-    eyes.setTextBounds(900, 17, 110, 40);
-    eyes.inputEnabled = true;
-    eyes.events.onInputOver.add(eyesOver,this);
-    eyes.events.onInputOut.add(eyesOut,this);
-    eyes.events.onInputDown.add(eyesDown,this);
-
-    face = game.add.text(20, 20, "Face" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
-    face.setTextBounds(1000, 17, 110, 40);
-    face.inputEnabled = true;
-    face.events.onInputOver.add(faceOver,this);
-    face.events.onInputOut.add(faceOut,this);
-    face.events.onInputDown.add(faceDown,this);
-
-    weapon = game.add.text(20, 20, "Weapon" , { font: "16pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 1 , boundsAlignH: "center", boundsAlignV: "middle" });
-    weapon.setTextBounds(1100, 17, 110, 40);
-    weapon.inputEnabled = true;
-    weapon.events.onInputOver.add(weaponOver,this);
-    weapon.events.onInputOut.add(weaponOut,this);
-    weapon.events.onInputDown.add(weaponDown,this);
+    arrows.events.onInputOver.add(over, this);
+    arrows.events.onInputOut.add(out, this);
+    arrows.endFill();
 }
-function tabLayout()
+function tabs(width, height, text, textL)
 {
-    var hairTAB = game.add.graphics(20,20);
-    // Display box
-    hairTAB.lineStyle(3, 0xffffff, 1);
-    hairTAB.moveTo(810,75);
-    hairTAB.lineTo(game.width-75, 75);
-    hairTAB.lineTo(game.width-75, 220);
-    hairTAB.lineTo(810, 220);
-    hairTAB.lineTo(810, 75);
-    // items
-    hairTAB.moveTo(830,250);
-    hairTAB.lineTo(930, 250);
-    hairTAB.lineTo(930, 350);
-    hairTAB.lineTo(830, 350);
-    hairTAB.lineTo(830, 250);
-
-    hairTAB.moveTo(950,250);
-    hairTAB.lineTo(1050, 250);
-    hairTAB.lineTo(1050, 350);
-    hairTAB.lineTo(950, 350);
-    hairTAB.lineTo(950, 250);
-
-    hairTAB.moveTo(1070,250);
-    hairTAB.lineTo(1170, 250);
-    hairTAB.lineTo(1170, 350);
-    hairTAB.lineTo(1070, 350);
-    hairTAB.lineTo(1070, 250);
-
-    hairTAB.moveTo(830,370);
-    hairTAB.lineTo(930, 370);
-    hairTAB.lineTo(930, 470);
-    hairTAB.lineTo(830, 470);
-    hairTAB.lineTo(830, 370);
-
-    hairTAB.moveTo(950,370);
-    hairTAB.lineTo(1050, 370);
-    hairTAB.lineTo(1050, 470);
-    hairTAB.lineTo(950, 470);
-    hairTAB.lineTo(950, 370);
-
-    hairTAB.moveTo(1070,370);
-    hairTAB.lineTo(1170, 370);
-    hairTAB.lineTo(1170, 470);
-    hairTAB.lineTo(1070, 470);
-    hairTAB.lineTo(1070, 370);
-
-    hairTAB.moveTo(830,490);
-    hairTAB.lineTo(930, 490);
-    hairTAB.lineTo(930, 590);
-    hairTAB.lineTo(830, 590);
-    hairTAB.lineTo(830, 490);
-
-    hairTAB.moveTo(950,490);
-    hairTAB.lineTo(1050, 490);
-    hairTAB.lineTo(1050, 590);
-    hairTAB.lineTo(950, 590);
-    hairTAB.lineTo(950, 490);
-
-    hairTAB.moveTo(1070,490);
-    hairTAB.lineTo(1170, 490);
-    hairTAB.lineTo(1170, 590);
-    hairTAB.lineTo(1070, 590);
-    hairTAB.lineTo(1070, 490);
-    hairTAB.endFill();
-}
-function hairTab()
-{
-    var hairTAB = game.add.graphics(20,20);
+    var tab = game.add.graphics(20,20);
     // Hair Tab
-    hairTAB.beginFill(0xDE3C4B);
-    hairTAB.lineStyle(3, 0x9b2a34, 1);
-    hairTAB.moveTo(800,55);
-    hairTAB.lineTo(810, 15);
-    hairTAB.lineTo(900, 15);
-    hairTAB.lineTo(910, 55);
-    hairTAB.lineTo(game.width-65, 55);
-    hairTAB.lineTo(game.width-65, game.height - 65);
-    hairTAB.lineTo(800, game.height - 65);
-    hairTAB.endFill();
+    tab.beginFill(0xffffff, 0.2);
+    tab.lineStyle(3, 0x9b2a34, 1);
+    tab.moveTo(width,height);
+    tab.lineTo(width+5, height);
+    tab.lineTo(width+10, height-25);
+    tab.lineTo(width+ textL, height-25);
+    tab.lineTo(width+ textL + 10, height);
+    tab.lineTo(game.width-65, height);
+    tab.lineTo(game.width-65, height + 125);
+    tab.lineTo(width, height + 125);
+    tab.lineTo(width, height);
+    tab.endFill();
+    game.add.text(width+40, height, text, tabStyle);
+
 }
-function eyeTab()
+var hairindex = 0;
+function hairDisplay()
 {
-    var eyeTAB = game.add.graphics(20,20);
-    // Eyes tab
-    eyeTAB.beginFill(0xFB651D);
-    eyeTAB.lineStyle(3, 0xaf4614, 1);
-    eyeTAB.moveTo(800,55);
-    eyeTAB.lineTo(900, 55);
-    eyeTAB.lineTo(910, 15);
-    eyeTAB.lineTo(1000, 15);
-    eyeTAB.lineTo(1010, 55);
-    eyeTAB.lineTo(game.width-65, 55);
-    eyeTAB.lineTo(game.width-65, game.height - 65);
-    eyeTAB.lineTo(800, game.height - 65);
-    eyeTAB.endFill();
+    hair = game.add.image(1015,55, images.hair[hairindex].name);
+    hair.scale.setTo(0.4);
+    bh = bb.create(500,55, images.hair[hairindex].name);
+    bh.scale.setTo(0.4);
+    player.appearance.head.hair = images.hair[hairindex].name;
 }
-function faceTab()
+var eyeindex = 0;
+function eyesDisplay()
 {
-    var faceTAB = game.add.graphics(20,20);
-    // Face tab
-    faceTAB.beginFill(0x2F323A);
-    faceTAB.lineStyle(3, 0x202328, 1);
-    faceTAB.moveTo(800,55);
-    faceTAB.lineTo(1000, 55);
-    faceTAB.lineTo(1010, 15);
-    faceTAB.lineTo(1100, 15);
-    faceTAB.lineTo(1110, 55);
-    faceTAB.lineTo(game.width-65, 55);
-    faceTAB.lineTo(game.width-65, game.height - 65);
-    faceTAB.lineTo(800, game.height - 65);
-    faceTAB.endFill();
+    eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
+    eyes.scale.setTo(0.1);
+    be = bb.create(550, 55, images.eyes[eyeindex].name);
+    be.scale.setTo(0.1);
+    player.appearance.head.eye = images.eyes[eyeindex].name;
 }
-function weaponTab()
+var faceindex = 0;
+function faceDisplay()
 {
-    var weaponTAB = game.add.graphics(20,20);
-    // Weapon tab
-    weaponTAB.beginFill(0xA2A79E);
-    weaponTAB.lineStyle(3, 0x71746e, 1);
-    weaponTAB.moveTo(800,55);
-    weaponTAB.lineTo(1100, 55);
-    weaponTAB.lineTo(1110, 15);
-    weaponTAB.lineTo(1200, 15);
-    weaponTAB.lineTo(1210, 55);
-    weaponTAB.lineTo(game.width-65, 55);
-    weaponTAB.lineTo(game.width-65, game.height - 65);
-    weaponTAB.lineTo(800, game.height - 65);
-    weaponTAB.endFill();
+    face = game.add.image(1015, 415, images.face[faceindex].name);
+    face.scale.setTo(0.1);
+    bf = bb.create(600, 55, images.face[faceindex].name);
+    bf.scale.setTo(0.1);
+    player.appearance.head.face = images.face[faceindex].name;
 }
+var classIndex = 0;
 function classDisplay(){
     if(classIndex <= 0)
     {
         console.log(classIndex);
         sol = game.add.image(50,150, 'soldier');
         sol.scale.setTo(0.3);
+        player.classes = "soldier";
     }
     else if (classIndex == 1)
     {
         console.log(classIndex);
         sol = game.add.image(50,150, 'mercenary');
         sol.scale.setTo(0.3);
+        player.classes = "mercenary";
     }
     else if (classIndex == 2)
     {
@@ -323,6 +335,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'blackmage');
         sol.scale.setTo(0.4);
+        player.classes = "blackmage";
     }
     else if(classIndex == 3)
     {
@@ -330,6 +343,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'ranger');
         sol.scale.setTo(0.3);
+        player.classes = "ranger";
     }
     else if (classIndex >= 4)
     {
@@ -337,6 +351,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'whitemage');
         sol.scale.setTo(0.3);
+        player.classes = "whitemage";
     }
 }
 function preClass() {
@@ -382,7 +397,6 @@ function nextClass() {
         classIndex = classes.classes.length-1;
     }
 }
-
 function over(cord, x, side){
     var arrow = game.add.graphics(0,0);
     arrow.lineStyle(2, 0xFB651D, 1);
@@ -430,7 +444,6 @@ function nextClassOver() {
 }
 function preClassOver() {
     over(320,68,"l");
-
 }
 function nextClassOut() {
     out(320,400,"r");
@@ -439,109 +452,230 @@ function preClassOut() {
     out(320,68,"l");
 
 }
-function hairOver()
-{
-    hair.fill = "#000000";
-    hair.stroke = "#000000";
-}
-function hairOut()
-{
-    hair.fill = "#ffffff";
-    hair.stroke = "#ffffff";
-}
-function hairDown()
-{
-    console.log("hair");
-    eyeTab(); faceTab(); weaponTab(); hairTab(); TabText(); tabLayout();
-}
-function eyesOver()
-{
-    eyes.fill = "#ff00000";
-    eyes.stroke = "#ff0000";
-}
-function eyesOut()
-{
-    eyes.fill = "#ffffff";
-    eyes.stroke = "#ffffff";
-}
-function eyesDown()
-{
-    console.log("eyes");
-    hairTab();  faceTab(); weaponTab(); eyeTab(); TabText();tabLayout();
-}
-function faceOver()
-{
-    face.fill = "#00ff00";
-    face.stroke = "#00ff00"
-}
-function faceOut()
-{
-    face.fill = "#ffffff";
-    face.stroke = "#ffffff";
-}
-function faceDown()
-{
-    console.log("face");
-    hairTab(); eyeTab();  weaponTab();  faceTab(); TabText();tabLayout();
-}
-function weaponOver()
-{
-    weapon.fill = "#ffff00";
-    weapon.stroke = "#ffff00"
-}
-function weaponOut()
-{
-    weapon.fill = "#ffffff";
-    weapon.stroke = "#ffffff";
-}
-function weaponDown()
-{
-    console.log("weapon");
-    hairTab(); eyeTab();  faceTab(); weaponTab(); TabText();tabLayout();
-}
-var classes = {
-    class: {
-        soldier: {
-            specialization: "Gaurdian",
-            hp: 190,
-            def: 200,
-            sDef: 190,
-            atk: 110,
-            sAtk: 90,
-            sta: 40,
-            mna: 40,
-            prc: 40,
-            hea: 70,
-            buf: 50,
-            con: 80
-        },
-        Mercenary: {
-            specialization: "Assassin",
-            hp: 190,
-            def: 200,
-            sDef: 190,
-            atk: 110,
-            sAtk: 90,
-            sta: 40,
-            mna: 40,
-            prc: 40,
-            hea: 70,
-            buf: 50,
-            con: 80
-        },
-        BlackMage: {
-            specialization: "Summoner",
-            hp: 190,
-            def: 200,
-            sDef: 190,
-            atk: 110,
-            sAtk: 90,
-            sta: 40,
-            mna: 40,
-            prc: 40,
-            hea: 70,
-            buf: 50,
-            con: 80
-        }
+function tabover(cord, x, side){
+    var arrow = game.add.graphics(0,0);
+    arrow.lineStyle(2, 0xFB651D, 1);
+    arrow.beginFill(0xFB651D, 1);
+
+    var point1 = cord + 2;
+    var point2 = cord + 50;
+    var point3 = cord + 25;
+    if (side == "l")
+    {
+
+        arrow.moveTo(68,point1);
+        arrow.lineTo(68,point2);
+        arrow.lineTo(68-15,point3);
+    }else{
+        arrow.moveTo(x,point1);
+        arrow.lineTo(x,point2);
+        arrow.lineTo(x+15,point3);
     }
-};
+    arrow.endFill();
+}
+//hair prev and next
+function HLdown(){
+    console.log("In hair l arrow clicked");
+    hair.destroy();
+    hairindex--;
+    if(hairindex<=0)
+    {
+        bh.destroy();
+        hairindex = 0;
+        hair = game.add.image(1015,55, images.hair[hairindex].name);
+        hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
+    }
+    else if (hairindex >= images.hair.length)
+    {
+        bh.destroy();
+        hairindex = images.hair.length -1;
+        hair = game.add.image(1015,55, images.hair[hairindex].name);
+        hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
+    }
+    else
+    {
+        bh.destroy();
+        hair = game.add.image(1015,55, images.hair[hairindex].name);
+        hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
+    }
+    player.appearance.head.hair = images.hair[hairindex].name;
+}
+function HLover(){
+    console.log("In hair L over");
+    tabover(940,85,"l");
+}
+function HLout() {
+    console.log("In hair L out");
+
+}
+function HRdown(){
+    console.log("In hair r arrow clicked");
+    hair.destroy();
+    hairindex++;
+   if (hairindex >= images.hair.length)
+    {
+        bh.destroy();
+        hairindex = images.hair.length -1;
+        hair = game.add.image(1015,55, images.hair[hairindex].name);
+        hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
+    }
+    else
+    {
+        bh.destroy();
+        hair = game.add.image(1015,55, images.hair[hairindex].name);
+        hair.scale.setTo(0.4);
+        bh = bb.create(500,55, images.hair[hairindex].name);
+        bh.scale.setTo(0.4);
+    }
+    player.appearance.head.hair = images.hair[hairindex].name;
+}
+function HRover(){
+    console.log("In hair R over");
+    tabover(940,85,"l");
+}
+function HRout() {
+    console.log("In hair R out");
+
+}
+//eyes prev and next
+function ELdown(){
+    console.log("In eyes l arrow clicked");
+    eyes.destroy();
+    eyeindex--;
+    if(eyeindex<=0)
+    {
+        eyeindex = 0;
+        eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
+        eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
+    }
+    else if (eyeindex >= images.eyes.length)
+    {
+        eyeindex = images.eyes.length -1;
+        eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
+        eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
+    }
+    else
+    {
+        eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
+        eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
+    }
+    player.appearance.head.eye = images.eyes[eyeindex].name;
+
+}
+function ELover(){
+    console.log("In eyes L over");
+    tabover(940,245,"l");
+}
+function ELout() {
+    console.log("In eyes L out");
+
+}
+function ERdown(){
+    console.log("In hair r arrow clicked");
+    eyes.destroy();
+    eyeindex++;
+    if (eyeindex >= images.eyes.length)
+    {
+        eyeindex = images.eyes.length -1;
+        eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
+        eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
+    }
+    else
+    {
+        eyes = game.add.image(970, 235, images.eyes[eyeindex].name);
+        eyes.scale.setTo(0.1);
+        be = bb.create(550, 55, images.eyes[eyeindex].name);
+        be.scale.setTo(0.1);
+    }
+    player.appearance.head.eye = images.eyes[eyeindex].name;
+
+}
+function ERover(){
+    console.log("In eyes R over");
+    tabover(940,85,"l");
+}
+function ERout() {
+    console.log("In eyes R out");
+
+}
+//face prev and next
+function FLdown(){
+    console.log("In face l arrow clicked");
+    face.destroy();
+    faceindex--;
+    if(faceindex<=0)
+    {
+        faceindex = 0;
+        face = game.add.image(1015, 415, images.face[faceindex].name);
+        face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
+    }
+    else if (faceindex >= images.face.length)
+    {
+        faceindex = images.face.length -1;
+        face = game.add.image(1015, 415, images.face[faceindex].name);
+        face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
+    }
+    else
+    {
+        face = game.add.image(1015, 415, images.face[faceindex].name);
+        face.scale.setTo(0.05);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.11);
+    }
+    player.appearance.head.face = images.face[faceindex].name;
+
+}
+function FLover(){
+    console.log("In face L over");
+}
+function FLout() {
+    console.log("In face L out");
+}
+function FRdown(){
+    console.log("In face r arrow clicked");
+    face.destroy();
+    faceindex++;
+    if (faceindex >= images.face.length)
+    {
+        faceindex = images.face.length -1;
+        face = game.add.image(1015, 415, images.face[faceindex].name);
+        face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
+    }
+    else
+    {
+        face = game.add.image(1015, 415, images.face[faceindex].name);
+        face.scale.setTo(0.1);
+        bf = bb.create(600, 55, images.face[faceindex].name);
+        bf.scale.setTo(0.1);
+    }
+    player.appearance.head.face = images.face[faceindex].name;
+
+}
+function FRover(){
+    console.log("In face R over");
+}
+function FRout() {
+    console.log("In face R out");
+}
