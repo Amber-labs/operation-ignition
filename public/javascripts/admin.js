@@ -2,7 +2,7 @@
 var ignite = angular.module('ignite',[]);
 
 //angularjs controller
-ignite.controller('ignite-controller', function($scope, $http){
+ignite.controller('ignite-controller', function($scope, $http, prettyPrint){
     //ajax call for player data
     $http.get("/api/players/data").then(function(res){
         $scope.player = res.data;
@@ -12,6 +12,8 @@ ignite.controller('ignite-controller', function($scope, $http){
     $http.get("/api/classes/data").then(function(res){
         $scope.classes = res.data.classes;
         log('classes', JSON.stringify($scope.classes));
+        for (var i = 0; i < $scope.classes.length; i++)
+            $scope.classes[i].prettyPrint = prettyPrint.tabs($scope.classes[i]);
     });
 
     $scope.doneClasses = function(){
@@ -34,30 +36,12 @@ ignite.controller('ignite-controller', function($scope, $http){
 
         log('classes','done');
     }
-    /*
-    $(document).ready(function() {
-        /*
-        var modals = $('div[type*="modal"]');
-        modals.css('background-color', 'red');
-        log('modal', JSON.stringify(modals));
-        modals.each(function(index){alert(this);});
-        */
-    /*
-        var modals = $('div[type="modal"]')
-        //select close button
-        var modalButtons = $("button");
-        modalButtons.css('background-color','red');
-        //alert(modalButtons);
-        console.log(modalButtons);
-        modalButtons.click(function(){
-            alert(this);
-            modals.each(function (id){
-                alert(id);
-            });
-        });
-    });
-    */
+});
 
+ignite.service('prettyPrint', function(){
+    this.tabs = function(json){
+        return JSON.stringify(json, null, '\t');
+    };
 });
 
 ignite.directive('igniteClasses', function() {
@@ -78,39 +62,3 @@ ignite.directive('ignite-classes', function (){
         }
     };
 });
-    /*
-    .directive('ignite-main', function (){
-    return function (scope, element, attrs) {
-        alert('done');
-    };
-});
-*/
-
-
-/*
-// Get the modal
-var modal = document.getElementById('myModal');
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-*/

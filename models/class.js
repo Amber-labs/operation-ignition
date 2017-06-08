@@ -2,7 +2,15 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 
 var classSchema = mongoose.Schema({
-    classes: []
+    classes: [
+        {
+            label: String,
+            name: String,
+            icon: String,
+            weapons: []
+        }
+    ],
+    lastUpdate: {}
 });
 
 var Class = module.exports = mongoose.model('Class', classSchema);
@@ -14,32 +22,38 @@ Class.findOne({}, function(error, doc){
         console.log(error);
     else
     {
-        //if database is empty
-        //if (!doc)
-        {
-            //read the game classes file
-            fs.readFile('templates/classes.json', 'utf-8', function(error, data){
-            Class.collection.drop();
-                if (error)
-                    return console.log(error);
-                //store to db
-                else
-                {
-                    var file = JSON.parse(data)
-                    var classes = new Class({
-                        classes: file.classes
-                    });
-                    classes.save(function (error, classes){
-                        if (error)
-                            throw error;
-                        else
-                            console.log(classes);
-                    });
-                }
-            });
-        }
+        //read the game classes file
+        fs.readFile('templates/classes.json', 'utf-8', function(error, data){
+            if (error)
+                return console.log(error);
+            //store to db
+            else
+            {
+                var file = JSON.parse(data);
+                var fileDate = new Date(file.lastUpdate);
+                console.log(fileDate.toString());
+                //if database document date is before the file
+                if (!doc || doc && new Date(doc.lastUpdate) < fileDate)
+                    updateClasses(file);
+            }
+        });
     }
 });
+
+function updateClasses(file)
+{
+    Class.collection.drop();
+    var classes = new Class({
+        classes: file.classes,
+        lastUpdate: file.lastUpdate
+    });
+    classes.save(function (error, classes){
+        if (error)
+            throw error;
+        else
+            console.log(classes);
+    });
+}
 
 module.exports.getClasses = function (callback) {
     Class.findOne({}, callback);

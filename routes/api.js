@@ -20,7 +20,7 @@ router.get('/players/data', function (req, res, next) {
 
 /*
 * JSON API for updating player data
-* To be implemented: attribute validation
+* To be implemented: attribute validation, ensure updates only happen from admin accounts
  */
 router.post('/players/data', function (req, res, next) {
     checkPlayerIdentity(req.user, res, function (player) {
@@ -37,6 +37,7 @@ router.post('/players/data', function (req, res, next) {
                 "potion",
                 "potion"
             ];
+            player.created = true;
             switch (player.class)
             {
                 case "Solider":
@@ -113,17 +114,52 @@ router.post('/players/data', function (req, res, next) {
         }
         else
         {
-            if (req.body.player.specialization)
+            if (req.body.specialization)
                 player.specialization = req.body.specialization;
-            //player validation
-            player.level = req.body.level;
-            player.experience = req.body.experience;
-            player.stats = req.body.stats;
-            player.equipment = req.body.equipment;
-            player.inventory = req.body.inventory;
+            /*
+            player validation
+            (NEEDS to be condensed but cannot think of a simple solution ATM
+            will look into later on) probably with arrays but because of how
+            html forms send my data defaultly I can't see an easy solution.
+             */
+
+            if (req.body.level)
+                player.level = req.body.level;
+            if (req.body.experience)
+                player.experience = req.body.experience;
+            if (req.body.equipment)
+                player.equipment = req.body.equipment;
+            if (req.body.inventory)
+                player.inventory = req.body.inventory;
+
+            if (req.body.currentHealth)
+                player.stats.currentHealth = req.body.currentHealth;
+            if (req.body.maxHealth)
+                player.stats.maxHealth = req.body.maxHealth;
+            if (req.body.defence)
+                player.stats.defence = req.body.defence;
+            if (req.body.specialDefence)
+                player.stats.specialDefence = req.body.specialDefence;
+            if (req.body.attack)
+                player.stats.attack = req.body.attack;
+            if (req.body.specialAttack)
+                player.stats.specialAttack = req.body.specialAttack;
+            if (req.body.stamina)
+                player.stats.stamina = req.body.stamina;
+            if (req.body.mana)
+                player.stats.mana = req.body.mana;
+            if (req.body.precision)
+                player.stats.precision = req.body.precision;
+            if (req.body.healing)
+                player.stats.healing = req.body.healing;
+            if (req.body.buff)
+                player.stats.buff = req.body.buff;
+            if (req.body.condition)
+                player.stats.condition = req.body.condition;
         }
         player.save();
-        console.log(player);
+        console.log(req.body);
+        res.redirect('/accounts/admin')
     });
 });
 
@@ -146,6 +182,35 @@ router.get('/classes/data', function (req, res, next){
     });
 });
 
+/*
+* JSON API for updating class data
+* To be implemented: class validation, ensure updates only happen from admin accounts
+ */
+router.post('/classes/data', function (req, res, next){
+    checkAdmin(req.user, res, function(){
+        Class.getClasses(function(error, doc){
+            if (error)
+                res.render(error);
+            else
+            {
+                if (typeof doc != 'undefined')
+                {
+                    console.log(req.body);
+                    for (var i = 0; i < doc.classes.length; i++)
+                        if (req.body[doc.classes[i].name])
+                            doc.classes[i] = JSON.parse(req.body[doc.classes[i].name]);
+                    doc.lastUpdate = new Date().getTime();
+                    doc.save();
+                    console.log(doc);
+                    res.redirect('/accounts/admin');
+                }
+                else
+                    res.end('Error classes not found')
+            }
+        });
+    });
+});
+
 /* Get game states
 * JSON API for returning preload game state data
 * WIP, may be depreciated
@@ -162,19 +227,16 @@ router.all('/states/preload', function (req, res, next){
 });
 
 /*
-* standard function to ensure requests are identified
+* standard function to ensure requests player are identified and in our database
  */
 function checkPlayerIdentity(user, res, next) {
-    //if request is identified
-    if (typeof user != 'undefined')
-    {
-        //validate request identity exists
-        Player.getPlayerByUsername(user.username, function(error, doc){
+    checkUserIdentified(user, res, function() {
+        //validate request identity exists in database
+        Player.getPlayerByUsername(user.username, function (error, doc) {
             //error validating request identity
             if (error)
-                res.render('error', {error:error});
-            else
-            {
+                res.render('error', {error: error});
+            else {
                 //success validating requested identity exists
                 if (typeof doc != 'undefined')
                     next(doc);
@@ -183,7 +245,29 @@ function checkPlayerIdentity(user, res, next) {
                     res.redirect('/accounts/login');
             }
         });
-    }
+    });
+}
+
+function checkAdmin(user, res, next) {
+    checkUserIdentified(user, res, function(){
+        User.getUserByUsername(user.username, function (error, doc){
+            if (error)
+                res.render('error', {error: error});
+            else {
+                if (typeof doc != 'undefined' && doc.admin === true)
+                    next(doc);
+                else
+                    res.redirect('/accounts/login');
+            }
+        })
+    });
+}
+
+//standard function for checking if requests are identified
+function checkUserIdentified(user, res, next) {
+    //if request is identified
+    if (typeof user != 'undefined')
+        next();
     //request is not identified
     else
         res.redirect('/accounts/login');
