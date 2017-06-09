@@ -6,4 +6,41 @@ block content
             div.row
                 +title('Sign up')
             div.row
-                +form(['Username','Password','Confirm-Password','Name','Email'],'/accounts/register')
+                +form(
+                [
+                    {
+                        label: 'Enter: Username (Unique)',
+                        input: {
+                            placeholder: 'Username',
+                            name: 'username'
+                        }
+                    },
+                    {
+                        label: 'Enter: Password',
+                        input: {
+                            placeholder: 'Password',
+                            name:'password'
+                        }
+                    },
+                    {
+                        label: 'Enter: Password (Confirm)',
+                        input: {
+                            placeholder: 'Confirm password',
+                            name: 'confirm-password'
+                        }
+                    },
+                    {
+                        label: 'Enter: Name (First)',
+                        input: {
+                            placeholder: 'Name',
+                            name: 'name'
+                        }
+                    },
+                    {
+                        label: 'Enter: Email (Valid)',
+                        input: {
+                            placeholder: 'Email',
+                            name: 'email'
+                        }
+                    }
+                ], '/accounts/register')

@@ -121,6 +121,7 @@ router.post('/players/data', function (req, res, next) {
             (NEEDS to be condensed but cannot think of a simple solution ATM
             will look into later on) probably with arrays but because of how
             html forms send my data defaultly I can't see an easy solution.
+            Update: can improve with bracket notation
              */
 
             if (req.body.level)
@@ -131,6 +132,10 @@ router.post('/players/data', function (req, res, next) {
                 player.equipment = req.body.equipment;
             if (req.body.inventory)
                 player.inventory = req.body.inventory;
+            if (req.body.created ==='false')
+                player.created = false;
+            else if (req.body.created === 'true')
+                player.created = true;
 
             if (req.body.currentHealth)
                 player.stats.currentHealth = req.body.currentHealth;

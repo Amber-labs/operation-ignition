@@ -14,7 +14,7 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
     else
     {
       if (typeof doc != 'undefined')
-        res.render('index', {player:doc});
+        res.render('index', {player:doc, title: 'Home'});
       else
         res.redirect('/accounts/login');
     }

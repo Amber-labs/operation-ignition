@@ -293,6 +293,8 @@ function hairDisplay()
     hair.scale.setTo(0.4);
     bh = bb.create(500,55, images.hair[hairindex].name);
     bh.scale.setTo(0.4);
+    player.appearance = {};
+    player.appearance.head = {};
     player.appearance.head.hair = images.hair[hairindex].name;
 }
 var eyeindex = 0;
@@ -320,14 +322,14 @@ function classDisplay(){
         console.log(classIndex);
         sol = game.add.image(50,150, 'soldier');
         sol.scale.setTo(0.3);
-        player.classes = "soldier";
+        player.class = "soldier";
     }
     else if (classIndex == 1)
     {
         console.log(classIndex);
         sol = game.add.image(50,150, 'mercenary');
         sol.scale.setTo(0.3);
-        player.classes = "mercenary";
+        player.class = "mercenary";
     }
     else if (classIndex == 2)
     {
@@ -335,7 +337,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'blackmage');
         sol.scale.setTo(0.4);
-        player.classes = "blackmage";
+        player.class = "blackmage";
     }
     else if(classIndex == 3)
     {
@@ -343,7 +345,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'ranger');
         sol.scale.setTo(0.3);
-        player.classes = "ranger";
+        player.class = "ranger";
     }
     else if (classIndex >= 4)
     {
@@ -351,7 +353,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'whitemage');
         sol.scale.setTo(0.3);
-        player.classes = "whitemage";
+        player.class = "whitemage";
     }
 }
 function preClass() {
