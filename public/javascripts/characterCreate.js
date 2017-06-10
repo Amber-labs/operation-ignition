@@ -231,7 +231,6 @@ var characterCreate = {
                     }
                 }
             );
-            alert('Submited');
         }
 
     },
