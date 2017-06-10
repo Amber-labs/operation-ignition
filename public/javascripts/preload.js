@@ -19,7 +19,10 @@ var preload = {
     create: function () {
         //particles.lights = this.add.group();
         //this.state.start('logo');
-        this.state.start('characterCreate');
+        if (!player.created)
+            this.state.start('characterCreate');
+        else
+            this.state.start('map');
     },
     update: function () {
         //console.log('in update function of LOAD file');

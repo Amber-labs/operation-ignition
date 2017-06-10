@@ -1,6 +1,8 @@
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game-container');
 var player;
+var players;
 var classes;
+var socket = io();
 
 $.ajax({url: '/api/players/data', success: function(doc) {
     log('player',JSON.stringify(doc));

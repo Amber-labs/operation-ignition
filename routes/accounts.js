@@ -95,7 +95,7 @@ router.post('/register', function (req, res, next) {
                   Player.createPlayer(newPlayer, function (err, player){
                      if (err)
                          throw err;
-                     console.log(player);
+                     console.log('user created: '+player);
                   });
 
                   res.redirect('/');
@@ -151,7 +151,7 @@ router.get('/admin', ensureAuthenticated, function (req, res) {
 passport.use(new LocalStrategy(
     function(username, password, done) {
         User.getUserByUsername(username, function(err, user){
-            console.log('hi');
+            console.log('user logged in: '+username);
             if(err){
                 throw err;
             }

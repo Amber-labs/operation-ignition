@@ -43,6 +43,8 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 //redirect JS angularjs
 app.use('/js', express.static(__dirname + '/node_modules/angular'));
+//redirect JS socket.io
+app.use('/js', express.static(__dirname + '/node_modules/socket.io-client/dist'));
 // redirect CSS bootstrap
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 

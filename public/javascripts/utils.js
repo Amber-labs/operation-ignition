@@ -4,6 +4,16 @@ function log(tag, message)
     console.log("["+tag+"] : "+message);
 }
 
+//omits an attribute/key from a object
+function omit(obj, omitKey) {
+    return Object.keys(obj).reduce((result, key) => {
+        if(key !== omitKey) {
+            result[key] = obj[key];
+        }
+        return result;
+    }, {});
+}
+
 //capture tab key press for textarea
 $("div.modalForm").on('keydown', 'textarea', function(e) {
     var keyCode = e.keyCode || e.which;
