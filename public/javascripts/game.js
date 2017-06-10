@@ -1,12 +1,27 @@
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game-container');
-var player;
+var player = {};
 var players;
 var classes;
 var socket = io();
+var oldPos;
 
 $.ajax({url: '/api/players/data', success: function(doc) {
     log('player',JSON.stringify(doc));
     player = doc;
+    //add create sprite function
+    player.createSprite = function(state, sprite){
+        //create/add player sprite to state
+        sprite.sprite = state.add.sprite(game.width/2, game.height/2, 'rouge');
+        var playerImage = game.cache.getImage(sprite);
+        //create/add player label/name to state
+        sprite.label = state.add.text(sprite.sprite.position.x, sprite.sprite.position.y - playerImage.height, sprite.username, { font: '24px Arial', fill: '#222' });
+        sprite.label.anchor.setTo(0.5,0.5);
+        //anchor player to middle
+        sprite.sprite.anchor.setTo(0.5, 0.5);
+        //enable arcade physics
+        state.physics.enable(player.sprite, Phaser.Physics.ARCADE);
+        sprite.sprite.scale.setTo(0.15, 0.15);
+    }
 }});
 
 $.ajax({
