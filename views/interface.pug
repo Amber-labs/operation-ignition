@@ -50,8 +50,10 @@ mixin title(name)
 mixin form(feilds, action)
     form(method='post' action= action)
         each field in feilds
-            +label(field.label)
-            +input(field.input)
+            if field.label
+                +label(field.label)
+            if field.input
+                +input(field.input)
         +input('submit','button')
 
 mixin label(label)
@@ -71,14 +73,20 @@ mixin input(input, type)
                     else
                         input(type='text' class='form-control' placeholder='Not set', name= input.name)
 
-mixin modal(name)
+mixin modal(name, label, object, action)
     div(id= name class='container' type='modal')
         div(class= name+'ModalContent' type='modalContent')
             div(type='modalHeader')
                 span(type='modalClose' class= name) &times;
-                h2= 'Edit '+name
+                h2= 'Edit '+label
             div.modalForm
-                textarea(class='form' name= name type='text' placeholder=name cols='6')= name
+                if (action)
+                    form(method='post' action= action)
+                        if object
+                            textarea(class='form' name= name type='text' placeholder=name cols='6' rows='25')= object
+                        else
+                            textarea(class='form' name= name type='text' placeholder=name cols='6')= label
+                        +input('submit','button')
 
 block errors
     if errors

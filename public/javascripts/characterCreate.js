@@ -287,7 +287,6 @@ function tabs(width, height, text, textL)
     game.add.text(width+40, height, text, tabStyle);
 
 }
-
 var hairindex = 0;
 function hairDisplay()
 {
@@ -675,6 +674,7 @@ function FRdown(){
         bf.scale.setTo(0.1);
     }
     player.appearance.head.face = images.face[faceindex].name;
+
 }
 function FRover(){
     console.log("In face R over");

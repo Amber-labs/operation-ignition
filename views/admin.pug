@@ -10,38 +10,135 @@ block content
         div.card.container
             +title('Player')
             div.col-xs-12#playerConsole
-                h3 Username: {{player.username}}
-            +form(
-            [
-                {
-                    label: 'Level: {{player.level}}',
-                    input: {
-                        placeholder: '{{player.level}}',
-                        name: 'level'
+                +title('Username: {{player.username}}')
+                +form(
+                [
+                    {
+                        label: 'Level: {{player.level}}',
+                        input: {
+                            placeholder: '{{player.level}}',
+                            name: 'level'
+                        },
                     },
-                },
-                {
-                    label: 'Experience: {{player.experience}}',
-                    input: {
-                        placeholder: '{{player.experience}}',
-                        name: 'experience'
+                    {
+                        label: 'Experience: {{player.experience}}',
+                        input: {
+                            placeholder: '{{player.experience}}',
+                            name: 'experience'
+                        }
+                    },
+                    {
+                        label: 'Class: {{player.class}}',
+                        input: {
+                            placeholder: '{{player.class}}',
+                            name: 'class'
+                        }
+                    },
+                    {
+                        label: 'Specialization: {{player.specialization}}',
+                        input: {
+                            placeholder: '{{player.specialization}}',
+                            name: 'specialization'
+                        }
+                    },
+                    {
+                        label: 'Player created: {{player.created}}',
+                        input: {
+                            placeholder: '{{player.created}}',
+                            name: 'created'
+                        }
                     }
-                },
-                {
-                    label: 'Class: {{player.class}}',
-                    input: {
-                        placeholder: '{{player.class}}',
-                        name: 'class'
-                    }
-                },
-                {
-                    label: 'Specialization: {{player.specialization}}',
-                    input: {
-                        placeholder: '{{player.specialization}}',
-                        name: 'Specialization'
-                    }
-                }
-            ], 'players/data')
+                ], '/api/players/data')
+            div.col-xs-12
+                +form([
+                    {
+                        label: 'Player stats'
+                    },
+                    {
+                        label: 'Player health: {{player.stats.currentHealth}}',
+                        input: {
+                            placeholder: '{{player.stats.currentHealth}}',
+                            name: 'currentHealth'
+                        }
+                    },
+                    {
+                        label: 'Player maximum health: {{player.stats.maxHealth}}',
+                        input: {
+                            placeholder: '{{player.stats.maxHealth}}',
+                            name: 'maxHealth'
+                        }
+                    },
+                    {
+                        label: 'Player defence: {{player.stats.defence}}',
+                        input: {
+                            placeholder: '{{player.stats.defence}}',
+                            name: 'defence'
+                        }
+                    },
+                    {
+                        label: 'Player special defence: {{player.stats.specialDefence}}',
+                        input: {
+                            placeholder: '{{player.stats.specialDefence}}',
+                            name: 'specialDefence'
+                        }
+                    },
+                    {
+                        label: 'Player attack: {{player.stats.attack}}',
+                        input: {
+                            placeholder: '{{player.stats.attack}}',
+                            name: 'attack'
+                        }
+                    },
+                    {
+                        label: 'Player special attack: {{player.stats.specialAttack}}',
+                        input: {
+                            placeholder: '{{player.stats.specialAttack}}',
+                            name: 'specialAttack'
+                        }
+                    },
+                    {
+                        label: 'Player stamina: {{player.stats.stamina}}',
+                        input: {
+                            placeholder: '{{player.stats.stamina}}',
+                            name: 'stamina'
+                        }
+                    },
+                    {
+                        label: 'Player mana: {{player.stats.mana}}',
+                        input: {
+                            placeholder: '{{player.stats.mana}}',
+                            name: 'mana'
+                        }
+                    },
+                    {
+                        label: 'Player precision: {{player.stats.precision}}',
+                        input: {
+                            placeholder: '{{player.stats.precision}}',
+                            name: 'precision'
+                        }
+                    },
+                    {
+                        label: 'Player healing power: {{player.stats.healing}}',
+                        input: {
+                            placeholder: '{{player.stats.healing}}',
+                            name: 'healing'
+                        }
+                    },
+                    {
+                        label: 'Player buff duration: {{player.stats.buff}}',
+                        input: {
+                            placeholder: '{{player.stats.buff}}',
+                            name: 'buff'
+                        }
+                    },
+                    {
+                        label: 'Player condition duration: {{player.stats.condition}}',
+                        input: {
+                            placeholder: '{{player.stats.condition}}',
+                            name: 'condition'
+                        }
+                    }], '/api/players/data')
+
     div(id='classCard' class='col-xs-12' ng-if='classes')
         div.card.container
             +title('Classes')
@@ -51,14 +148,13 @@ block content
                         div.col-sm-9
                             p {{gameClass.label}}
                         div.col-sm-3
-                            button(id="{{gameClass}}Button", class="{{gameClass.name}}" type='modalButton') Edit {{gameClass.name}}
-                        +modal('{{gameClass.name}}', '{{gameClass.label}}')
+                            button(id="{{gameClass}}Button", class="{{gameClass.name}}" type='modalButton') Edit {{gameClass.label}}
+                        +modal('{{gameClass.name}}', '{{gameClass.label}}', '{{gameClass.prettyPrint}}', '/api/classes/data')
             div.center
                 button(id='newClassButton', class='newClass', type='modalButton') New class
                 +modal('newClass', 'New class')
+
             //div(class='col-xs-12' ng-if='classes')
             //div.card.container
             //+input('Level: {{player.data.level}}')
                 //div(ng-repeat='')
-
-

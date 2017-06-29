@@ -19,7 +19,7 @@ var PlayerSchema = mongoose.Schema({
         precision: Number,
         healing: Number,
         buff: Number,
-        condition: Number,
+        condition: Number
     },
     appearance: {
         head : {

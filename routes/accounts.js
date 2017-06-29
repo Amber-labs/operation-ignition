@@ -13,19 +13,19 @@ router.get('/register', function(req, res, next) {
 
 /* POST accounts register */
 router.post('/register', function (req, res, next) {
-  var username = req.body.Username;
-  var name = req.body.Name;
-  var email = req.body.Email;
-  var password = req.body.Password;
+  var username = req.body.username;
+  var name = req.body.name;
+  var email = req.body.email;
+  var password = req.body.password;
   console.log(JSON.stringify(req.body));
 
   //form validation
-  req.checkBody('Name','Name is required').notEmpty();
-  req.checkBody('Email', 'Email is Required').notEmpty();
-  req.checkBody('Email', 'Invalid Email').isEmail();
-  req.checkBody('Username', 'Username is Required').notEmpty();
-  req.checkBody('Password', 'Password is Required').notEmpty();
-  req.checkBody('Confirm-Password', 'Passwords do not match').equals(password);
+  req.checkBody('name','Name is required').notEmpty();
+  req.checkBody('email', 'Email is Required').notEmpty();
+  req.checkBody('email', 'Invalid Email').isEmail();
+  req.checkBody('username', 'Username is Required').notEmpty();
+  req.checkBody('password', 'Password is Required').notEmpty();
+  req.checkBody('confirm-password', 'Passwords do not match').equals(password);
   var errors = req.validationErrors();
   //req form has errors
   if (errors){
@@ -98,7 +98,7 @@ router.post('/register', function (req, res, next) {
                      console.log(player);
                   });
 
-                  res.render('index', {title: 'Home'});
+                  res.redirect('/');
               }
               //already registered username
               else {
