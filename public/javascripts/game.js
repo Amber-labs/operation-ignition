@@ -19,8 +19,10 @@ $.ajax({url: '/api/players/data', success: function(doc) {
         //anchor player to middle
         sprite.sprite.anchor.setTo(0.5, 0.5);
         //enable arcade physics
-        state.physics.enable(player.sprite, Phaser.Physics.ARCADE);
+        //state.physics.enable(player.sprite, Phaser.Physics.ARCADE);
+        state.physics.p2.enable(sprite.sprite);
         sprite.sprite.scale.setTo(0.15, 0.15);
+        game.camera.follow(sprite.sprite);
     }
 }});
 

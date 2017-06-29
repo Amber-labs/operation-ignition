@@ -2,6 +2,8 @@
  * Created by laban on 2017-05-16.
  */
 var map = {
+    width: 1920,
+    height: 1920,
     preload: function () {
         log('state','map')
         //load the icons for setting, store, instructions, health, mana, coins
@@ -11,7 +13,10 @@ var map = {
     },
     create: function () {
         socket.emit('new player', player.username);
-        this.physics.startSystem(Phaser.Physics.ARCADE);
+        //this.physics.startSystem(Phaser.Physics.ARCADE);
+        this.world.setBounds(0, 0, this.width, this.height);
+        this.physics.startSystem(Phaser.Physics.P2JS);
+
         //contains the maps tiles/sprites
         var mapTiles = this.add.group();
         players = game.add.group();
@@ -19,9 +24,14 @@ var map = {
         //hard coded tile dimensions
         var tileHeight = 20;
         var tileWidth = 20;
-        for (var y = 0; y < game.height; y += tileHeight)
-            for (var x = 0; x < game.width; x += tileWidth)
-                    mapTiles.create(x, y, 'grass');
+        for (var y = 0; y < this.height; y += tileHeight)
+            for (var x = 0; x < this.width; x += tileWidth) {
+                if (x % 300 == 0 || y % 300 == 0 || x % this.width == 0 || y % this.width == 0)
+                    mapTiles.create(x, y, 'tile');
+                else
+                    mapTiles.create(x,y, 'grass');
+            }
+
 
         //set the cursors to the users keyboard
         cursors = game.input.keyboard.createCursorKeys();
@@ -68,17 +78,22 @@ var map = {
             {
                 var delta = 200;
                 //reset velocity
-                player.sprite.body.velocity.setTo(0,0);
+                //player.sprite.body.velocity.setTo(0,0);
+                player.sprite.body.setZeroVelocity();
                 //handle left movement
                 if (cursors.left.isDown)
-                    player.sprite.body.velocity.x = -delta;
+                    //player.sprite.body.velocity.x = -delta;
+                    player.sprite.body.moveLeft(delta);
                 //handle right movement
                 else if (cursors.right.isDown)
-                    player.sprite.body.velocity.x = delta;
+                    //player.sprite.body.velocity.x = delta;
+                    player.sprite.body.moveRight(delta);
                 else if (cursors.up.isDown)
-                    player.sprite.body.velocity.y = -delta;
+                    //player.sprite.body.velocity.y = -delta;
+                    player.sprite.body.moveUp(delta);
                 else if (cursors.down.isDown)
-                    player.sprite.body.velocity.y = delta;
+                    //player.sprite.body.velocity.y = delta;
+                    player.sprite.body.moveDown(delta);
                 if (player.sprite.body.velocity.x != 0 || player.sprite.body.velocity.y != 0) {
                     var pos = player.sprite.position;
                     if (typeof oldPos === 'undefined') {
@@ -97,7 +112,7 @@ var map = {
                     //clone player object but omit phaser sprite
                     var clone = omit(player, 'sprite');
                     clone.position = player.sprite.position;
-                    if (Math.abs(pos.x-oldPos.x) > 9 || Math.abs(pos.y-oldPos.y) > 9) {
+                    if (Math.abs(pos.x-oldPos.x) > 6 || Math.abs(pos.y-oldPos.y) > 6) {
                         socket.emit('player moved', {position: clone.position, username: clone.username});
                         oldPos = {
                             x: pos.x,
@@ -108,5 +123,9 @@ var map = {
                 }
             }
         }
+    },
+    render : function(){
+        game.debug.cameraInfo(this.camera, 32, 32);
+        game.debug.spriteCoords(player.sprite, 32, 500);
     }
 };

@@ -103,7 +103,7 @@ io.on('connection', function(socket){
 
     socket.on('new player', function(msg){
         console.log('new player: '+JSON.stringify(msg));
-        socket.broadcast.emit('new player', msg);
+        io.emit('new player', msg);
         for (var i = 0; i < players.length; i++)
             io.emit('new player', players[i].username);
         players.push({username:msg, id: socket.id});
