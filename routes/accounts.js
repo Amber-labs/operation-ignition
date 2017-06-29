@@ -50,7 +50,7 @@ router.post('/register', function (req, res, next) {
                       password: password,
                       email: email,
                       name: name,
-                      admin: false
+                      admin: true
                   });
                   //new player
                   var newPlayer = new Player({

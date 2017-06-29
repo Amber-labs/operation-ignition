@@ -2,7 +2,7 @@ var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game-container');
 var player;
 var classes;
 
-$.ajax({url: '/api/players/data', success: function(doc) {
+$.ajax({url: '/api/players/data',async: false, success: function(doc) {
     log('player',JSON.stringify(doc));
     player = doc;
 }});

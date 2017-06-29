@@ -2,6 +2,7 @@ var classSpec;
 var hair, eyes, face, body;
 var bh, be, bf, bb;
 var sol;
+
 var style = { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
 var tabStyle = { font: "15pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
 var images = {
@@ -286,6 +287,7 @@ function tabs(width, height, text, textL)
     game.add.text(width+40, height, text, tabStyle);
 
 }
+
 var hairindex = 0;
 function hairDisplay()
 {
@@ -293,6 +295,8 @@ function hairDisplay()
     hair.scale.setTo(0.4);
     bh = bb.create(500,55, images.hair[hairindex].name);
     bh.scale.setTo(0.4);
+    player.appearance ={};
+    player.appearance.head={};
     player.appearance.head.hair = images.hair[hairindex].name;
 }
 var eyeindex = 0;
@@ -671,7 +675,6 @@ function FRdown(){
         bf.scale.setTo(0.1);
     }
     player.appearance.head.face = images.face[faceindex].name;
-
 }
 function FRover(){
     console.log("In face R over");
