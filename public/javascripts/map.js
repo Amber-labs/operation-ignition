@@ -10,6 +10,12 @@ var map = {
         this.load.image('grass','/images/tiles/grass_placeholder.png');
         this.load.image('tile','/images/tiles/tile_placeholder.png');
         this.load.image('rouge', '/images//player/characters/rouge.png');
+        this.load.tilemap('spawn', '/map/spawn.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mario', '/map/super_mario.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('temp', '/map/temp.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles', '/tilesets/super_mario.png');
+        this.load.image('Walls_tiles', '/tilesets/Walls.jpg');
+        this.load.image('buildings_tiles', '/tilesets/tileset.png');
     },
     create: function () {
         socket.emit('new player', player.username);
@@ -24,6 +30,7 @@ var map = {
         //hard coded tile dimensions
         var tileHeight = 20;
         var tileWidth = 20;
+        /*
         for (var y = 0; y < this.height; y += tileHeight)
             for (var x = 0; x < this.width; x += tileWidth) {
                 if (x % 300 == 0 || y % 300 == 0 || x % this.width == 0 || y % this.width == 0)
@@ -31,6 +38,36 @@ var map = {
                 else
                     mapTiles.create(x,y, 'grass');
             }
+        */
+
+        /*
+        var map = game.add.tilemap('spawn');
+        map.addTilesetImage('Walls', 'Walls_tiles');
+        map.addTilesetImage('Walls', 'Walls_tiles');
+        map.addTilesetImage('buildings', 'buildings_tiles');
+
+        var layer = map.createLayer('plants');
+        layer.resizeWorld();
+        var layer2 = map.createLayer('buildings');
+        layer2.resizeWorld();
+        var layer3 = map.createLayer('roads');
+        layer3.resizeWorld();
+        var layer4 = map.createLayer('background');
+        layer4.resizeWorld();
+        //var layer5 = map.createLayer('player');
+        //layer5.resizeWorld();
+        */
+
+
+        var map = game.add.tilemap('temp');
+
+        map.addTilesetImage('buildings', 'buildings_tiles');
+
+        var layer = map.createLayer('background');
+        var roads = map.createLayer('roads');
+        var buildings = map.createLayer('buildings');
+
+        layer.resizeWorld();
 
 
         //set the cursors to the users keyboard
