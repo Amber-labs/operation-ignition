@@ -15,7 +15,7 @@ Our project is based on the mean stack with other technologies such as Socket.IO
 # Reference
 * [player][playerGame] global object containing the game related data like health, specialization, location, inventory, ect. For more specific details check out the [schema][playerSchema]
 
-[playerSchema]: https://github.com/Amber-labs/operation-ignition/blob/d1ff4ed1a38bae73e25f55efaebf31b53e03d103/models/player.js
+[playerSchema]: https://github.com/Amber-labs/operation-ignition/blob/d1ff4ed1a38bae73e25f55efaebf31b53e03d103/models/player.js#L3-L141
 [playerGame]: https://github.com/Amber-labs/operation-ignition/blob/d1ff4ed1a38bae73e25f55efaebf31b53e03d103/public/javascripts/game.js#L2
 [Travis]: https://travis-ci.org/Amber-labs/operation-ignition
 [Badge]: https://travis-ci.org/Amber-labs/operation-ignition.svg?branch=master
