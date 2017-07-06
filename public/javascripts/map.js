@@ -11,8 +11,6 @@ var map = {
         this.load.image('tile','/images/tiles/tile_placeholder.png');
         this.load.image('rouge', '/images//player/characters/rouge.png');
         this.load.tilemap('spawn', '/map/spawn.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('mario', '/map/super_mario.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('temp', '/map/temp.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles', '/tilesets/super_mario.png');
         this.load.image('Walls_tiles', '/tilesets/Walls.jpg');
         this.load.image('buildings_tiles', '/tilesets/tileset.png');
@@ -23,48 +21,14 @@ var map = {
         this.world.setBounds(0, 0, this.width, this.height);
         this.physics.startSystem(Phaser.Physics.P2JS);
 
-        //contains the maps tiles/sprites
-        var mapTiles = this.add.group();
-        players = game.add.group();
-
-        //hard coded tile dimensions
-        var tileHeight = 20;
-        var tileWidth = 20;
-        /*
-        for (var y = 0; y < this.height; y += tileHeight)
-            for (var x = 0; x < this.width; x += tileWidth) {
-                if (x % 300 == 0 || y % 300 == 0 || x % this.width == 0 || y % this.width == 0)
-                    mapTiles.create(x, y, 'tile');
-                else
-                    mapTiles.create(x,y, 'grass');
-            }
-        */
-
-        /*
         var map = game.add.tilemap('spawn');
-        map.addTilesetImage('Walls', 'Walls_tiles');
-        map.addTilesetImage('Walls', 'Walls_tiles');
-        map.addTilesetImage('buildings', 'buildings_tiles');
-
-        var layer = map.createLayer('plants');
-        layer.resizeWorld();
-        var layer2 = map.createLayer('buildings');
-        layer2.resizeWorld();
-        var layer3 = map.createLayer('roads');
-        layer3.resizeWorld();
-        var layer4 = map.createLayer('background');
-        layer4.resizeWorld();
-        //var layer5 = map.createLayer('player');
-        //layer5.resizeWorld();
-        */
-
-
-        var map = game.add.tilemap('temp');
 
         map.addTilesetImage('buildings', 'buildings_tiles');
 
         var layer = map.createLayer('background');
         var roads = map.createLayer('roads');
+        var plants = map.createLayer('plants');
+        var water = map.createLayer('water');
         var buildings = map.createLayer('buildings');
 
         layer.resizeWorld();
@@ -73,6 +37,9 @@ var map = {
         //set the cursors to the users keyboard
         cursors = game.input.keyboard.createCursorKeys();
         player.createSprite(this, player);
+
+        //contains the maps tiles/sprites
+        players = game.add.group();
     },
     update: function() {
         updatePlayer();
