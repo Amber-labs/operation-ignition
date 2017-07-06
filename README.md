@@ -7,10 +7,10 @@ Operation ignition is a Online Web base real time Multiplayer, RPG game. Ignite 
 Our project is based on the mean stack with other technologies such as Socket.IO, JQuery, Bootstrap and more to come.
 
 # Endpoints
-|  Endpoint  |  GET  |  POST  |  PUT  |
-| :--------: | :---: | :----: | :---: |
-| /api/players/data | returns current user's player data | updates current user's player data | not in use |
-| /api/classes/data | return list of all the games classes | not in use | not in use |
+|  Endpoint  |  GET  |  POST  |  PUT  | PATCH | DELETE |
+| :--------: | :---: | :----: | :---: | :---: | :----: |
+| /api/players/data | returns current user's player data | updates current user's player data | not in use | not in use | not in use |
+| /api/classes/data | return list of all the games classes | not in use | not in use | not in use | not in use |
 
 # Reference
 * [player][playerGame] global object containing the game related data like health, specialization, location, inventory, ect. For more specific details check out the [schema][playerSchema]
