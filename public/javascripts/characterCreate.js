@@ -2,6 +2,7 @@ var classSpec;
 var hair, eyes, face, body;
 var bh, be, bf, bb;
 var sol;
+
 var style = { font: "30pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
 var tabStyle = { font: "15pt Courier", fill: "#ffffff", stroke: "#ffffff", strokeThickness: 2 , boundsAlignH: "center", boundsAlignV: "middle" };//{ font: "20px Courier", fill: "#fff", tabs: 132 };
 var images = {
@@ -292,8 +293,8 @@ function hairDisplay()
     hair.scale.setTo(0.4);
     bh = bb.create(500,55, images.hair[hairindex].name);
     bh.scale.setTo(0.4);
-    player.appearance = {};
-    player.appearance.head = {};
+    player.appearance ={};
+    player.appearance.head={};
     player.appearance.head.hair = images.hair[hairindex].name;
 }
 var eyeindex = 0;
@@ -321,14 +322,14 @@ function classDisplay(){
         console.log(classIndex);
         sol = game.add.image(50,150, 'soldier');
         sol.scale.setTo(0.3);
-        player.class = "soldier";
+        player.classes = "soldier";
     }
     else if (classIndex == 1)
     {
         console.log(classIndex);
         sol = game.add.image(50,150, 'mercenary');
         sol.scale.setTo(0.3);
-        player.class = "mercenary";
+        player.classes = "mercenary";
     }
     else if (classIndex == 2)
     {
@@ -336,7 +337,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'blackmage');
         sol.scale.setTo(0.4);
-        player.class = "blackmage";
+        player.classes = "blackmage";
     }
     else if(classIndex == 3)
     {
@@ -344,7 +345,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'ranger');
         sol.scale.setTo(0.3);
-        player.class = "ranger";
+        player.classes = "ranger";
     }
     else if (classIndex >= 4)
     {
@@ -352,7 +353,7 @@ function classDisplay(){
 
         sol = game.add.image(50,150, 'whitemage');
         sol.scale.setTo(0.3);
-        player.class = "whitemage";
+        player.classes = "whitemage";
     }
 }
 function preClass() {

@@ -8,7 +8,7 @@ Operation ignition is a Online Web base real time Multiplayer, RPG game. Ignite 
 # Technologies
 Our project is based on the mean stack with other technologies such as Socket.IO, JQuery, Bootstrap and more to come.
 
-# Endpoints
+# API Endpoints
 |  Endpoint  |  GET  |  POST  |  PUT  | PATCH | DELETE |
 | :--------: | :---: | :----: | :---: | :---: | :----: |
 | /api/players/data | returns current user's player data | updates current user's player data | not in use | not in use | not in use |

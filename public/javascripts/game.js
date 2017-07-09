@@ -5,7 +5,7 @@ var classes;
 var socket = io();
 var oldPos;
 
-$.ajax({url: '/api/players/data', success: function(doc) {
+$.ajax({url: '/api/players/data',async: false, success: function(doc) {
     log('player',JSON.stringify(doc));
     player = doc;
     //add create sprite function
