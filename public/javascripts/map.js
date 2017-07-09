@@ -37,7 +37,8 @@ var map = {
         //set the cursors to the users keyboard
         cursors = game.input.keyboard.createCursorKeys();
         player.createSprite(this, player);
-
+        game.physics.p2.enable(player.sprite);
+        //this.physics.enable(player.sprite, Phaser.Physics.ARCADE);
         //contains the maps tiles/sprites
         players = game.add.group();
     },
@@ -80,7 +81,7 @@ var map = {
             //if the player is currently alive
             if (player.stats.currentHealth > 0)
             {
-                var delta = 200;
+                var delta = 300;
                 //reset velocity
                 //player.sprite.body.velocity.setTo(0,0);
                 player.sprite.body.setZeroVelocity();
@@ -129,7 +130,7 @@ var map = {
         }
     },
     render : function(){
-        game.debug.cameraInfo(this.camera, 32, 32);
-        game.debug.spriteCoords(player.sprite, 32, 500);
+        //game.debug.cameraInfo(this.camera, 32, 32);
+        //game.debug.spriteCoords(player.sprite, 32, 500);
     }
 };

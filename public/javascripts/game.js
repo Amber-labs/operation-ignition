@@ -22,7 +22,8 @@ $.ajax({url: '/api/players/data', success: function(doc) {
         //state.physics.enable(player.sprite, Phaser.Physics.ARCADE);
         state.physics.p2.enable(sprite.sprite);
         sprite.sprite.scale.setTo(0.15, 0.15);
-        game.camera.follow(sprite.sprite);
+        sprite.sprite.body.fixedRotation = true;
+        game.camera.follow(sprite.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
     }
 }});
 
