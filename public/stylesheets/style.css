@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
-#container-logo, #ignite-logo { max-width: 500px; text-align: center; margin: auto; }
-#game-container { background-color: black; margin-bottom: 20px; }
+#container-logo, #ignite-logo { position: absolute; max-width: 500px; text-align: center; margin: auto; }
+#game-container { width: 100%; height: 100%; background-color: black; margin-bottom: 20px; }
 
 /* Remove bootstrap default underline */
-.page-header { border-bottom: none; text-align: center; font-size: 44px; }
+.page-header { font-size: 36px; margin: 0px; border-bottom: none; text-align: center; font-size: 44px; }
 
 /* The Close Button */
 span[type=modalClose] {
@@ -20,20 +20,52 @@ span[type=modalClose]:focus {
   cursor: pointer;
 }
 
+div#chat { border-radius: 6px; position: absolute; right: 0; bottom: 0; background-color: rgba(10,10,10,0.5); z-index: 1000; padding: 20px; max-height: 300px; overflow: hidden; min-width: 250px;  }
+
+div#chat > ul#messages {
+  max-height: 200px; overflow: auto;
+  padding-bottom: 40px;
+}
+
+div#chat > ul#messages > li {
+  min-width: 100%;
+  max-height: 300px; overflow: auto;
+  color: white;
+  list-style-type: none;
+}
+
+div#chat > form#chatbox {
+  position: absolute;
+  min-width: 100%;
+  width: 100%;
+  bottom: 0;
+}
+
 button/*[type=submit]*/ { background-color: #FB651D; margin-bottom: 10px; color: white; border: none; padding: 8px 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); border-radius: 6px; }
 
-div.card
-{
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+div.card {
   background-color: white;
+  margin: auto;
+  position: absolute;
+  top: 50%; left: 0; bottom: 50%; right: 0;
+  max-width: 1000px;
+  height: 50%;
+  min-height: 400px;
   border-radius: 6px;
   border: solid 1px rgb(208,208,208);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: auto;
-  padding-right: auto;
+  padding: 40px 10px;
   max-width: 1000px;
-  margin: auto;
-  margin-bottom: 20px;
+  overflow-y: scroll;
 }
 
 div.card > div.container { max-width:  650px; }
@@ -92,6 +124,7 @@ div[type=modalHeader]
 
 html, body
 {
+  overflow: hidden;
   width: 100%;
   height: 100%;
   min-height: 100%;
@@ -103,10 +136,13 @@ html, body
 
 nav
 {
-  background-color: #DE3C4B;
+  position: absolute;
+  background-color: rgba(10,10,10,0.5);
+  width: 100%;
   padding: 20px 15px;
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  z-index: 1000;
 }
 nav a { color: white; }
 nav a:hover { color: lightgrey; }

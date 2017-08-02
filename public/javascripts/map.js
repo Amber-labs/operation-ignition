@@ -1,6 +1,12 @@
 /**
  * Created by laban on 2017-05-16.
  */
+var socket = io();
+
+socket.on('message', function(msg){
+    $('ul#messages').append($('<li>').text(msg.sender+' : '+msg.text));
+});
+
 var map = {
     width: 1920,
     height: 1920,

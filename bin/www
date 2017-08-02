@@ -110,6 +110,11 @@ io.on('connection', function(socket){
         console.log(JSON.stringify(players));
     });
 
+    socket.on('message', function(msg){
+       console.log('message sent: '+JSON.stringify(msg));
+       io.emit('message', msg);
+    });
+
     socket.on('disconnect', function(){
         console.log('disconnected socket id: '+socket.id);
         for (var i = 0; i < players.length; i++)

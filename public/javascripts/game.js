@@ -1,4 +1,4 @@
-var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game-container');
+var game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'game-container');
 var player = {};
 var players;
 var classes;
@@ -35,6 +35,14 @@ $.ajax({
         log('classes', JSON.stringify(doc));
         classes = doc;
     }
+});
+
+$(document).ready(function () {
+    $('form').submit(function() {
+        socket.emit('message', { sender: player.username, text: $('#m').val()});
+        $('#m').val('');
+        return false;
+    });
 });
 
 //add the game states

@@ -1,7 +1,7 @@
 extends interface
 
 block content
-    div.card
+    div.card(style='margin: auto; ')
         div.container
             div.row
                 +title('Log in')
@@ -11,14 +11,14 @@ block content
                     {
                         label: 'Username',
                         input: {
-                            placeholder:'Username',
+                            placeholder: 'Username',
                             name: 'username'
                         }
                     },
                     {
                         label: 'Password',
                         input: {
-                            placeholder:'Password',
+                            placeholder: 'Password',
                             name: 'password'
                         }
                     }
