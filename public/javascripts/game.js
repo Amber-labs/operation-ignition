@@ -43,8 +43,11 @@ $.ajax({
 
 $(document).ready(function () {
     $('form').submit(function() {
-        socket.emit('message', { sender: player.username, text: $('#m').val()});
-        $('#m').val('');
+        if ($('#m').val().length > 0) {
+            socket.emit('message', {sender: player.username, text: $('#m').val()});
+            //reset val
+            $('#m').val('');
+        }
         return false;
     });
 
