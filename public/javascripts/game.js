@@ -27,6 +27,15 @@ $.ajax({url: '/api/players/data',async: false, success: function(doc) {
     }
 }});
 
+var ignite = angular.module('ignite',[]);
+//angularjs controller
+ignite.controller('ignite-controller', function($scope, $http){
+    $http.get("/api/players/data").then(function(res){
+        $scope.player = res.data;
+        console.log($scope.player);
+    });
+});
+
 $(window).resize(function() { window.resizeGame(); } );
 
 function resizeGame() {var height = $(window).height();var width = $(window).width();	game.width = width;game.height = height;game.stage.bounds.width = width;game.stage.bounds.height = height;	if (game.renderType === Phaser.WEBGL){	game.renderer.resize(width, height);}}
@@ -58,13 +67,13 @@ $(document).ready(function () {
     }
 
     function setFocused() {
-        var results = document.querySelectorAll('.game-pannel');
+        var results = document.querySelectorAll('.game-panel');
         for (var i  = 0; i < results.length; i++) {
             results[i].classList.add('focus');
         }
     }
     function removeFocused() {
-        var results = document.querySelectorAll('.game-pannel');
+        var results = document.querySelectorAll('.game-panel');
         for (var i  = 0; i < results.length; i++) {
             results[i].classList.remove('focus');
         }

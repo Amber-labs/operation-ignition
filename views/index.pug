@@ -2,13 +2,13 @@ extends interface
 
 block content
   div#game
-    div#chat.game-pannel
+    div#chat.game-panel
       ul#messages
       form(id='chatbox' action="")
         input(id="m" autocomplete="off" type="text" placeholder="Enter a Message..")
         button#sendmessage Send
     div.stats.game-panel
-      div.health
+      div.health health: {{ player.stats.currentHealth }}
     div#game-container
 
 append multiscripts
