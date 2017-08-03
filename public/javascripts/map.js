@@ -3,8 +3,40 @@
  */
 var socket = io();
 
+//handles messages sent
 socket.on('message', function(msg){
     $('ul#messages').append(('<li><b>'+msg.sender+'</b>: '+msg.text)+'</li>')
+});
+
+//handles new players on map
+socket.on('new player', function (msg){
+    if (msg != player.username) {
+        var alreadyAdded = false;
+        players.forEach(function (item) {
+            if (item.username === msg)
+                alreadyAdded = true;
+        }, this);
+        if (!alreadyAdded) {
+            console.log('new player: ' + msg);
+            var newPlayer = players.create(game.width / 2, game.height / 2, 'rouge');
+            newPlayer.scale.setTo(0.15, 0.15);
+            newPlayer.anchor.setTo(0.5, 0.5);
+            newPlayer.username = msg;
+            newPlayer.displayLabel = game.add.text(newPlayer.position.x, newPlayer.position.y, msg);
+            newPlayer.displayLabel.anchor.setTo(0.5, 1);
+        }
+    }
+});
+
+//handles movements from other players/browsers
+socket.on('player moved', function(msg){
+    var mover = JSON.parse(msg);
+    players.forEach(function(item){
+        if(item.username === mover.username) {
+            item.position = mover.position;
+            item.displayLabel.position = mover.position;
+        }
+    });
 });
 
 var map = {
@@ -39,7 +71,6 @@ var map = {
 
         layer.resizeWorld();
 
-
         //set the cursors to the users keyboard
         cursors = game.input.keyboard.createCursorKeys();
         player.createSprite(this, player);
@@ -50,93 +81,44 @@ var map = {
     },
     update: function() {
         updatePlayer();
-        //handles new players on map
-        socket.on('new player', function (msg){
-            msg = (JSON.stringify(msg).replace(/\\|"\"|\[`"]\\+ /g, '')).replace("\"", "").replace("\"", "");
-            if (msg != player.username) {
-                var alreadyAdded = false;
-                players.forEach(function (item) {
-                    if (item.username === msg)
-                        alreadyAdded = true;
-                }, this);
-                if (!alreadyAdded) {
-                    console.log('new player: ' + msg);
-                    var newPlayer = players.create(game.width / 2, game.height / 2, 'rouge');
-                    newPlayer.scale.setTo(0.15, 0.15);
-                    newPlayer.anchor.setTo(0.5, 0.5);
-                    newPlayer.username = msg;
-                    newPlayer.displayLabel = game.add.text(newPlayer.position.x, newPlayer.position.y, msg);
-                    newPlayer.displayLabel.anchor.setTo(0.5, 1);
-                }
-            }
-        });
-
-        socket.on('player moved', function(msg){
-            msgUsername = (JSON.stringify(JSON.parse(msg).username).replace(/\\|"\"|\[`"]\\+ /g, '')).replace("\"", "").replace("\"", "");
-            //console.log("Player moved: "+JSON.stringify(msgUsername));
-            players.forEach(function(item){
-               if(item.username === msgUsername) {
-                   item.position = JSON.parse(msg).position;
-                   item.displayLabel.position = JSON.parse(msg).position;
-                   //item.anchor.setTo(0.5, 1);
-               }
-            });
-        });
-
-        function updatePlayer(){
-            //if the player is currently alive
-            if (player.stats.currentHealth > 0)
-            {
-                var delta = 300;
-                //reset velocity
-                //player.sprite.body.velocity.setTo(0,0);
-                player.sprite.body.setZeroVelocity();
-                //handle left movement
-                if (cursors.left.isDown)
-                    //player.sprite.body.velocity.x = -delta;
-                    player.sprite.body.moveLeft(delta);
-                //handle right movement
-                else if (cursors.right.isDown)
-                    //player.sprite.body.velocity.x = delta;
-                    player.sprite.body.moveRight(delta);
-                else if (cursors.up.isDown)
-                    //player.sprite.body.velocity.y = -delta;
-                    player.sprite.body.moveUp(delta);
-                else if (cursors.down.isDown)
-                    //player.sprite.body.velocity.y = delta;
-                    player.sprite.body.moveDown(delta);
-                if (player.sprite.body.velocity.x != 0 || player.sprite.body.velocity.y != 0) {
-                    var pos = player.sprite.position;
-                    if (typeof oldPos === 'undefined') {
-                        console.log(JSON.stringify(pos));
-                        oldPos = {
-                            x: pos.x,
-                            y: pos.y,
-                            type: pos.type
-                        };
-                    }
-                    //var playerImage = game.cache.getImage(player);
-                    //pos.y = pos.y - playerImage.height;
-                    //update player label
-                    player.label.position = pos;
-                    player.label.anchor.setTo(0.5, 1);
-                    //clone player object but omit phaser sprite
-                    var clone = omit(player, 'sprite');
-                    clone.position = player.sprite.position;
-                    if (Math.abs(pos.x-oldPos.x) > 6 || Math.abs(pos.y-oldPos.y) > 6) {
-                        socket.emit('player moved', {position: clone.position, username: clone.username});
-                        oldPos = {
-                            x: pos.x,
-                            y: pos.y,
-                            type: pos.type
-                        };
-                    }
-                }
-            }
-        }
     },
     render : function(){
         //game.debug.cameraInfo(this.camera, 32, 32);
         //game.debug.spriteCoords(player.sprite, 32, 500);
     }
 };
+
+function updatePlayer(){
+    //if the player is currently alive
+    if (player.stats.currentHealth > 0)
+    {
+        var delta = 200;
+        //reset velocity
+        //player.sprite.body.velocity.setTo(0,0);
+        player.sprite.body.setZeroVelocity();
+        //handle left movement
+        if (cursors.left.isDown)
+        //player.sprite.body.velocity.x = -delta;
+            player.sprite.body.moveLeft(delta);
+        //handle right movement
+        else if (cursors.right.isDown)
+        //player.sprite.body.velocity.x = delta;
+            player.sprite.body.moveRight(delta);
+        else if (cursors.up.isDown)
+        //player.sprite.body.velocity.y = -delta;
+            player.sprite.body.moveUp(delta);
+        else if (cursors.down.isDown)
+        //player.sprite.body.velocity.y = delta;
+            player.sprite.body.moveDown(delta);
+        if (player.sprite.body.velocity.x != 0 || player.sprite.body.velocity.y != 0) {
+            var pos = player.sprite.position;
+            //update player label
+            player.label.position = pos;
+            player.label.anchor.setTo(0.5, 1);
+            //clone player object but omit phaser sprite
+            var clone = omit(player, 'sprite');
+            clone.position = player.sprite.position;
+            socket.emit('player moved', {position: clone.position, username: clone.username});
+        }
+    }
+}
