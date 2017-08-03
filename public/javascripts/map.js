@@ -4,7 +4,7 @@
 var socket = io();
 
 socket.on('message', function(msg){
-    $('ul#messages').append($('<li>').text(msg.sender+' : '+msg.text));
+    $('ul#messages').append(('<li><b>'+msg.sender+'</b>: '+msg.text)+'</li>')
 });
 
 var map = {

@@ -27,6 +27,10 @@ $.ajax({url: '/api/players/data',async: false, success: function(doc) {
     }
 }});
 
+$(window).resize(function() { window.resizeGame(); } );
+
+function resizeGame() {var height = $(window).height();var width = $(window).width();	game.width = width;game.height = height;game.stage.bounds.width = width;game.stage.bounds.height = height;	if (game.renderType === Phaser.WEBGL){	game.renderer.resize(width, height);}}
+
 $.ajax({
     url: '/api/classes/data',
     type: 'GET',
@@ -43,6 +47,25 @@ $(document).ready(function () {
         $('#m').val('');
         return false;
     });
+
+    var results = document.querySelectorAll('input[type="text"]');
+    for (var i = 0; i < results.length; i++) {
+        results[i].addEventListener("focus", setFocused);
+        results[i].addEventListener("blur", removeFocused);
+    }
+
+    function setFocused() {
+        var results = document.querySelectorAll('.game-pannel');
+        for (var i  = 0; i < results.length; i++) {
+            results[i].classList.add('focus');
+        }
+    }
+    function removeFocused() {
+        var results = document.querySelectorAll('.game-pannel');
+        for (var i  = 0; i < results.length; i++) {
+            results[i].classList.remove('focus');
+        }
+    }
 });
 
 //add the game states

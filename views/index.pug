@@ -2,11 +2,13 @@ extends interface
 
 block content
   div#game
-    div#chat
+    div#chat.game-pannel
       ul#messages
       form(id='chatbox' action="")
-        input(id="m" autocomplete="off")
-        button Send
+        input(id="m" autocomplete="off" type="text" placeholder="Enter a Message..")
+        button#sendmessage Send
+    div.stats.game-panel
+      div.health
     div#game-container
 
 append multiscripts
@@ -19,3 +21,5 @@ append multiscripts
   script(type='text/javascript' src="/javascripts/map.js")
   script(type='text/javascript' src="/javascripts/game.js")
   // End of Phaser dependencies
+  //game styles
+  link(rel='stylesheet', href='/stylesheets/game.css')

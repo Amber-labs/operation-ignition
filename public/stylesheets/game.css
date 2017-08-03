@@ -1,0 +1,88 @@
+div#game-container { position: absolute; top: 0; left: 0; }
+
+div.game-pannel {
+    position: absolute;
+    padding: 10px;
+    border-radius: 3px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+div.focus { background-color: rgba(10,10,10,0.4); }
+
+div#chat {
+    right: 15px;
+    bottom: 15px;
+    max-height: 300px;
+    width: 40%;
+    margin: auto;
+}
+
+div#chat > ul#messages {
+    color: white;
+    max-height: 200px; overflow: auto;
+    padding-left: 0px;
+    padding-bottom: 30px;
+    font-size: 18px;
+}
+
+div#chat > ul#messages > li {
+    margin: 5px 0px;
+    min-width: 100%;
+    max-height: 300px; overflow: auto;
+    color: white;
+    list-style-type: none;
+}
+
+div#chat > ul#messages > li > b { color: #FB651D; }
+
+div#chat > form#chatbox {
+    position: absolute;
+    right: 10px;
+    left: 10px;
+    bottom: 0px;
+}
+
+div#chat > form#chatbox > input#m {
+    width: 60%;
+    background-color: rgba(10,10,10,0.4);
+    border: none;
+    padding: 5px 10px;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+}
+div#chat > form#chatbox > input#m:focus { }
+input#m, select, textarea{
+    padding-left: 10px;
+    color: white;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: white
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: white;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: white;
+}
+
+div#chat > form#chatbox > button#sendmessage {
+    background-color: rgba(251,101,29, 0.8);
+    width: 40%;
+    padding: 5px 10px;
+    border-radius: 0px;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+div.stats
+{
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    width: 50%;
+}
