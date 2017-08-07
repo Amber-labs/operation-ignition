@@ -1,6 +1,6 @@
 # Ignite! [![Badge]][Travis]
 
-[![Ignite](https://alex-ng.herokuapp.com/images/projects/ignite/preview.png)](https://alex-ng.herokuapp.com/projects/ignite)
+[![Ignite screenshot](http://alex-ng.com/static/images/projects/ignite/preview.png)](http://alex-ng.com/projects/ignite)
 
 # Summary
 Operation ignition is a Online Web base real time Multiplayer, RPG game. Ignite will feature random terrain generation, with both perfect maze and procedurally generated styles. Ignite will also have a variety of standard RPG features like classes, guilds, items, quests and more!
