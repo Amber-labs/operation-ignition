@@ -2,6 +2,7 @@
  * Created by laban on 2017-05-16.
  */
 var socket = io();
+var weapon;
 
 //handles messages sent
 socket.on('message', function(msg){
@@ -47,6 +48,7 @@ var map = {
         //load the icons for setting, store, instructions, health, mana, coins
         this.load.image('grass','/images/tiles/grass_placeholder.png');
         this.load.image('tile','/images/tiles/tile_placeholder.png');
+        this.load.image('red-bullet', '/images/weapons/red-bullet.png');
         this.load.image('rouge', '/images//player/characters/rouge.png');
         this.load.tilemap('spawn', '/map/spawn.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles', '/tilesets/super_mario.png');
@@ -78,9 +80,34 @@ var map = {
         //this.physics.enable(player.sprite, Phaser.Physics.ARCADE);
         //contains the maps tiles/sprites
         players = game.add.group();
+
+        //  Creates 10 bullets, using the 'bullet' graphic
+        weapon = game.add.weapon(30, 'red-bullet');
+
+        //  The bullet will be automatically killed when it leaves the world bounds
+        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+
+        //  Because our bullet is drawn facing up, we need to offset its rotation:
+        weapon.bulletAngleOffset = 90;
+
+        //  The speed at which the bullet is fired
+        weapon.bulletSpeed = 400;
+
+        //  Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
+        weapon.fireRate = 60;
+
+        //  Add a variance to the bullet angle by +- this value
+        weapon.bulletAngleVariance = 10;
+
+        //  Tell the Weapon to track the 'player' Sprite, offset by 14px horizontally, 0 vertically
+        weapon.trackSprite(player.sprite, 14, 0);
     },
     update: function() {
         updatePlayer();
+        if (this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR).isDown)
+        {
+            weapon.fire();
+        }
     },
     render : function(){
         //game.debug.cameraInfo(this.camera, 32, 32);
@@ -98,12 +125,18 @@ function updatePlayer(){
         player.sprite.body.setZeroVelocity();
         //handle left movement
         if (cursors.left.isDown)
-        //player.sprite.body.velocity.x = -delta;
+        {
             player.sprite.body.moveLeft(delta);
+            if (player.sprite.scale.x > 0)
+                player.sprite.scale.x = -player.sprite.scale.x;
+        }
         //handle right movement
         else if (cursors.right.isDown)
-        //player.sprite.body.velocity.x = delta;
+        {
             player.sprite.body.moveRight(delta);
+            if (player.sprite.scale.x < 0)
+                player.sprite.scale.x = -player.sprite.scale.x;
+        }
         else if (cursors.up.isDown)
         //player.sprite.body.velocity.y = -delta;
             player.sprite.body.moveUp(delta);
