@@ -116,11 +116,15 @@ router.get('/login', function (req, res, next) {
 });
 
 /* POST accounts login
-* Authenticate and/or login session
-*/
-router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/accounts/register', failureFlash: false }), function(req, res) {
-    res.redirect('/');
-});
+ * Authenticate and/or login session
+ */
+
+router.post('/login',
+    passport.authenticate('local',{}),
+    function(req,res){
+        console.log('In Login');
+        res.send(req.session);
+    });
 
 /* GET accounts logout
 * Logout users session

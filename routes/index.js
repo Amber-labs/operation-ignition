@@ -4,21 +4,9 @@ var router = express.Router();
 var Player = require('../models/player');
 
 /* GET home page. */
-router.get('/', ensureAuthenticated, function(req, res, next) {
+router.get('/', function(req, res, next) {
   //Determine the sessions player
-  Player.getPlayerByUsername(req.user.username, function(error, doc){
-    if (error)
-    {
-      console.err('Error no entry found');
-    }
-    else
-    {
-      if (typeof doc != 'undefined')
-        res.render('index', {player:doc, title: 'Home'});
-      else
-        res.redirect('/accounts/login');
-    }
-  });
+    res.render('index', { title: 'Home'});
 });
 
 function ensureAuthenticated(req, res, next){

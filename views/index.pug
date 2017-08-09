@@ -2,24 +2,29 @@ extends interface
 
 block content
   div#game
+    if user
+      div#login.game-panel(ng-include="'/templates/login.html'" onload="loaded = true")
+    else
+      div#login.game-panel.show(ng-include="'/templates/login.html'" onload="loaded = true")
     div#chat.game-panel
       ul#messages
       form(id='chatbox' action="")
         input(id="m" autocomplete="off" type="text" placeholder="Enter a Message..")
         button#sendmessage Send
-    div.stats.game-panel
+    div#stats.game-panel
       div.health health: {{ player.stats.currentHealth }}
     div#game-container
 
 append multiscripts
+  script(type='text/javascript' src='/javascripts/ajax/login.js')
   // Phaser dependencies
   script(type='text/javascript' src='/js/socket.io.js')
-  script(type='text/javascript' src="/javascripts/phaser.min.js")
-  script(type='text/javascript' src="/javascripts/boot.js")
-  script(type='text/javascript' src="/javascripts/preload.js")
-  script(type='text/javascript' src='/javascripts/characterCreate.js')
-  script(type='text/javascript' src="/javascripts/map.js")
-  script(type='text/javascript' src="/javascripts/game.js")
+  script(type='text/javascript' src="/javascripts/game/phaser.min.js")
+  script(type='text/javascript' src="/javascripts/game/boot.js")
+  script(type='text/javascript' src="/javascripts/game/preload.js")
+  script(type='text/javascript' src='/javascripts/game/characterCreate.js')
+  script(type='text/javascript' src="/javascripts/game/map.js")
+  script(type='text/javascript' src="/javascripts/game/game.js")
   // End of Phaser dependencies
   //game styles
   link(rel='stylesheet', href='/stylesheets/game.css')
