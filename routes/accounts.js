@@ -131,7 +131,7 @@ router.post('/login',
 */
 router.get('/logout',function (req, res){
     req.logout();
-    res.redirect('/accounts/login');
+    res.redirect('/');
 });
 
 /* GET accounts admin page */
