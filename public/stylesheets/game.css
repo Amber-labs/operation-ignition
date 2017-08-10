@@ -24,7 +24,7 @@ div#chat {
 div#chat > ul#messages {
     color: white;
     max-height: 200px; overflow: auto;
-    padding-left: 0px;
+    padding-left: 10px;
     padding-bottom: 30px;
     font-size: 18px;
 }

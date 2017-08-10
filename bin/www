@@ -93,21 +93,24 @@ function onListening() {
 //socket setup
 var io = socket(server);
 var players = [];
+var sockets = [];
 
 io.on('connection', function(socket){
     console.log('new connected socket id: '+socket.id);
+    io.to(socket.id).emit('connected', socket.id);
+    sockets.push(socket);
+
     socket.on('player moved', function(msg) {
-        console.log('player moved: ' + JSON.stringify(msg));
-        socket.broadcast.emit('player moved', JSON.stringify(msg));
+        msg.id = socket.id;
+        socket.broadcast.emit('player moved', msg);
     });
 
     socket.on('new player', function(msg){
-        console.log('new player: '+JSON.stringify(msg));
-        io.emit('new player', msg);
-        for (var i = 0; i < players.length; i++)
-            io.emit('new player', players[i].username);
-        players.push({username:msg, id: socket.id});
-        console.log(JSON.stringify(players));
+        var newPlayer = {username: msg, id: socket.id}
+        console.log('new player: '+JSON.stringify(newPlayer));
+        socket.broadcast.emit('new player', newPlayer);
+        io.to(socket.id).emit('new players', players);
+        players.push(newPlayer);
     });
 
     socket.on('message', function(msg){
@@ -117,12 +120,11 @@ io.on('connection', function(socket){
 
     socket.on('disconnect', function(){
         console.log('disconnected socket id: '+socket.id);
+        socket.broadcast.emit('disconnected', socket.id);
         for (var i = 0; i < players.length; i++)
         {
-            console.log(players[i].id);
             if (players[i].id == socket.id)
                 players.splice(i, 1);
         }
-        console.log(JSON.stringify(players));
     });
 });

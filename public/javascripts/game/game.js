@@ -1,15 +1,13 @@
 var game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'game-container');
+var player = {};
+var players;
+var classes;
 
 //add the game states
 game.state.add('boot', boot);
 game.state.add('preload',preload);
 game.state.add('characterCreate', characterCreate);
 game.state.add('map', map);
-
-var player = {};
-var players;
-var classes;
-var socket = io();
 
 var ignite = angular.module('ignite',[]);
 
@@ -20,24 +18,26 @@ ignite.controller('ignite-controller', function($scope, $http){
 
 //game startup
 ignite.run(function($rootScope, $http) {
-    $rootScope.$on("$includeContentLoaded", function(event, templateName){
-        //if user is trying to login
-        $('form#login').submit(function () {
-            var data=$('form#login').serialize();
-            $.ajax({url: '/accounts/login', type: 'POST', async: false, data: data, success: function(doc) {
-                startGameLogin($http);
-            }});
-            return false;
-        });
-        //if user is using a guest account
-        $('form#guest').submit(function() {
-            startGameGuest();
-            return false;
-        });
-    });
     //if the user has already been logged in
     if (!$("div#login").hasClass("show")) {
         startGameLogin($http);
+    }
+    else {
+        $rootScope.$on("$includeContentLoaded", function(event, templateName){
+            //if user is trying to login
+            $('form#login').submit(function () {
+                var data=$('form#login').serialize();
+                $.ajax({url: '/accounts/login', type: 'POST', async: false, data: data, success: function(doc) {
+                    startGameLogin($http);
+                }});
+                return false;
+            });
+            //if user is using a guest account
+            $('form#guest').submit(function() {
+                startGameGuest();
+                return false;
+            });
+        });
     }
 });
 
@@ -51,6 +51,7 @@ function startGameLogin($http) {
     });
 }
 
+//starts the game as a guest account
 function startGameGuest() {
     player = {
         username: $('form#guest').find('input[name="username"]').val() ||'Guest',
@@ -77,6 +78,7 @@ function startGameGuest() {
     startGame();
 }
 
+//general start game method
 function startGame() {
     log('player', JSON.stringify(player));
     player.createSprite = function(state, sprite) {
@@ -102,6 +104,15 @@ function startGame() {
     $("div#stats").addClass("show");
 }
 
+$(window).resize(function() { window.resizeGame(); } );
+function resizeGame() {
+    var height = $(window).height();
+    var width = $(window).width();
+    game.width = width;game.height = height;
+    game.stage.bounds.width = width;game.stage.bounds.height = height;
+    if (game.renderType === Phaser.WEBGL){	game.renderer.resize(width, height);}
+}
+
 //get the list of server classes
 $.ajax({
     url: '/api/classes/data',
@@ -110,40 +121,5 @@ $.ajax({
     {
         log('classes', JSON.stringify(doc));
         classes = doc;
-    }
-});
-
-$(document).ready(function () {
-    //handle chat messages
-    $('form#chatbox').submit(function() {
-        if ($('#m').val().length > 0) {
-            socket.emit('message', {sender: player.username, text: $('#m').val()});
-            //reset val
-            $('#m').val('');
-        }
-        return false;
-    });
-
-    //chat box focus select
-    var results = document.querySelectorAll('input[type="text"]');
-    for (var i = 0; i < results.length; i++) {
-        results[i].addEventListener("focus", setFocused);
-        results[i].addEventListener("blur", removeFocused);
-    }
-
-    //focus chatbox
-    function setFocused() {
-        var results = document.querySelectorAll('.game-panel');
-        for (var i  = 0; i < results.length; i++) {
-            results[i].classList.add('focus');
-        }
-    }
-
-    //unfocus chatbox
-    function removeFocused() {
-        var results = document.querySelectorAll('.game-panel');
-        for (var i  = 0; i < results.length; i++) {
-            results[i].classList.remove('focus');
-        }
     }
 });

@@ -3,6 +3,12 @@
  */
 var socket = io();
 var weapon;
+var socketID;
+
+socket.on('connected', function(id){
+    socketID = id;
+    console.log('id retrieved: '+id);
+})
 
 //handles messages sent
 socket.on('message', function(msg){
@@ -10,32 +16,60 @@ socket.on('message', function(msg){
 });
 
 //handles new players on map
-socket.on('new player', function (msg){
-    if (msg != player.username) {
+socket.on('new player', function (newPlayer){
+    addNewPlayer(newPlayer);
+});
+
+socket.on('new players', function (newPlayers){
+   for (var i = 0; i < newPlayers.length; i++) {
+       addNewPlayer(newPlayers[i]);
+   }
+});
+
+socket.on('disconnected', function (id){
+    console.log('player disconnected: '+id);
+    removePlayer(id);
+});
+
+function addNewPlayer(newPlayer) {
+    if (newPlayer.id != socketID) {
         var alreadyAdded = false;
         players.forEach(function (item) {
-            if (item.username === msg)
+            if (item.id === newPlayer.id)
                 alreadyAdded = true;
         }, this);
         if (!alreadyAdded) {
-            console.log('new player: ' + msg);
-            var newPlayer = players.create(game.width / 2, game.height / 2, 'rouge');
-            newPlayer.scale.setTo(0.15, 0.15);
-            newPlayer.anchor.setTo(0.5, 0.5);
-            newPlayer.username = msg;
-            newPlayer.displayLabel = game.add.text(newPlayer.position.x, newPlayer.position.y, msg);
-            newPlayer.displayLabel.anchor.setTo(0.5, 1);
+            console.log('new player: ' + newPlayer.username);
+            const playerClass = 'rouge'
+            var newPlayerSprite = players.create(game.width / 2, game.height / 2, playerClass);
+            newPlayerSprite.scale.setTo(0.15, 0.15);
+            newPlayerSprite.anchor.setTo(0.5, 0.5);
+            newPlayerSprite.username = newPlayer.username;
+            newPlayerSprite.displayLabel = game.add.text(newPlayerSprite.position.x, newPlayerSprite.position.y, newPlayerSprite.username);
+            newPlayerSprite.displayLabel.anchor.setTo(0.5, 1);
+            newPlayerSprite.id = newPlayer.id;
         }
     }
-});
+    socket.emit('old player', player.username)
+}
+
+function removePlayer(removedPlayer) {
+    players.forEach(function(player){
+       if(player.id === removedPlayer) {
+           player.displayLabel.destroy();
+           players.remove(player);
+           $("ul#messages").append("<li><b>"+player.username+"</b> has disconnected</li>");
+       }
+    });
+}
 
 //handles movements from other players/browsers
 socket.on('player moved', function(msg){
-    var mover = JSON.parse(msg);
-    players.forEach(function(item){
-        if(item.username === mover.username) {
-            item.position = mover.position;
-            item.displayLabel.position = mover.position;
+    var mover = msg;
+    players.forEach(function(player){
+        if(player.id === mover.id) {
+            player.position = mover.position;
+            player.displayLabel.position = mover.position;
         }
     });
 });
@@ -120,13 +154,12 @@ function updatePlayer(){
     if (player.stats.currentHealth > 0)
     {
         var delta = 200;
-        //reset velocity
-        //player.sprite.body.velocity.setTo(0,0);
         player.sprite.body.setZeroVelocity();
         //handle left movement
         if (cursors.left.isDown)
         {
             player.sprite.body.moveLeft(delta);
+            //flip sprite to face walking direction
             if (player.sprite.scale.x > 0)
                 player.sprite.scale.x = -player.sprite.scale.x;
         }
@@ -134,24 +167,60 @@ function updatePlayer(){
         else if (cursors.right.isDown)
         {
             player.sprite.body.moveRight(delta);
+            //flip sprite to face walking direction
             if (player.sprite.scale.x < 0)
                 player.sprite.scale.x = -player.sprite.scale.x;
         }
+        //handle upwards movement
         else if (cursors.up.isDown)
-        //player.sprite.body.velocity.y = -delta;
             player.sprite.body.moveUp(delta);
+        //handle downwards movement
         else if (cursors.down.isDown)
-        //player.sprite.body.velocity.y = delta;
             player.sprite.body.moveDown(delta);
+        //precede if there is movement
         if (player.sprite.body.velocity.x != 0 || player.sprite.body.velocity.y != 0) {
+
             var pos = player.sprite.position;
             //update player label
             player.label.position = pos;
             player.label.anchor.setTo(0.5, 1);
-            //clone player object but omit phaser sprite
-            var clone = omit(player, 'sprite');
-            clone.position = player.sprite.position;
-            socket.emit('player moved', {position: clone.position, username: clone.username});
+            socket.emit('player moved', {position: player.sprite.position, username: player.username});
         }
     }
 }
+
+// chat functionality
+$(document).ready(function () {
+    //handle chat messages
+    $('form#chatbox').submit(function() {
+        if ($('#m').val().length > 0) {
+            socket.emit('message', {sender: player.username, text: $('#m').val()});
+            //reset val
+            $('#m').val('');
+        }
+        return false;
+    });
+
+    //chat box focus select
+    var results = document.querySelectorAll('input[type="text"]');
+    for (var i = 0; i < results.length; i++) {
+        results[i].addEventListener("focus", setFocused);
+        results[i].addEventListener("blur", removeFocused);
+    }
+
+    //focus chatbox
+    function setFocused() {
+        var results = document.querySelectorAll('.game-panel');
+        for (var i  = 0; i < results.length; i++) {
+            results[i].classList.add('focus');
+        }
+    }
+
+    //unfocus chatbox
+    function removeFocused() {
+        var results = document.querySelectorAll('.game-panel');
+        for (var i  = 0; i < results.length; i++) {
+            results[i].classList.remove('focus');
+        }
+    }
+});
