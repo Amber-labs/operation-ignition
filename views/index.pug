@@ -2,9 +2,7 @@ extends interface
 
 block content
   div#game
-    if user
-      div#login.game-panel(ng-include="'/templates/login.html'" onload="loaded = true")
-    else
+    if !user
       div#login.game-panel.show(ng-include="'/templates/login.html'" onload="loaded = true")
     div#chat.game-panel
       ul#messages
