@@ -26,10 +26,36 @@ socket.on('new players', function (newPlayers){
    }
 });
 
+socket.on('current players', function(newPlayers) {
+    for (var i = 0; i < newPlayers.length; i++)
+        addNewPlayer(newPlayers[i]);
+});
+
 socket.on('disconnected', function (id){
     console.log('player disconnected: '+id);
     removePlayer(id);
 });
+
+function addPlayer() {
+    player.createSprite(map, player);
+    game.physics.p2.enable(player.sprite);
+    //this.physics.enable(player.sprite, Phaser.Physics.ARCADE);
+
+    //Creates 10 bullets, using the 'bullet' graphic
+    weapon = game.add.weapon(10, 'red-bullet');
+    //The bullet will be automatically killed when it leaves the world bounds
+    weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    //Because our bullet is drawn facing up, we need to offset its rotation:
+    weapon.bulletAngleOffset = 90;
+    //The speed at which the bullet is fired
+    weapon.bulletSpeed = 400;
+    //Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
+    weapon.fireRate = 60;
+    //Add a variance to the bullet angle by +- this value
+    weapon.bulletAngleVariance = 10;
+    //Tell the Weapon to track the 'player' Sprite, offset by 14px horizontally, 0 vertically
+    weapon.trackSprite(player.sprite, 14, 0);
+}
 
 function addNewPlayer(newPlayer) {
     if (newPlayer.id != socketID) {
@@ -40,17 +66,19 @@ function addNewPlayer(newPlayer) {
         }, this);
         if (!alreadyAdded) {
             console.log('new player: ' + newPlayer.username);
-            const playerClass = 'rouge'
+            const playerClass = 'rouge';
             var newPlayerSprite = players.create(game.width / 2, game.height / 2, playerClass);
             newPlayerSprite.scale.setTo(0.15, 0.15);
             newPlayerSprite.anchor.setTo(0.5, 0.5);
             newPlayerSprite.username = newPlayer.username;
-            newPlayerSprite.displayLabel = game.add.text(newPlayerSprite.position.x, newPlayerSprite.position.y, newPlayerSprite.username);
+            newPlayerSprite.displayLabel = game.add.text(newPlayerSprite.position.x, newPlayerSprite.position.y, newPlayerSprite.username, {
+                font: '24px Arial',
+                fill: '#444'
+            });
             newPlayerSprite.displayLabel.anchor.setTo(0.5, 1);
             newPlayerSprite.id = newPlayer.id;
         }
     }
-    socket.emit('old player', player.username)
 }
 
 function removePlayer(removedPlayer) {
@@ -90,8 +118,7 @@ var map = {
         this.load.image('buildings_tiles', '/tilesets/tileset.png');
     },
     create: function () {
-        socket.emit('new player', player.username);
-        //this.physics.startSystem(Phaser.Physics.ARCADE);
+        socket.emit('current players');
         this.world.setBounds(0, 0, this.width, this.height);
         this.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -107,40 +134,20 @@ var map = {
 
         layer.resizeWorld();
 
-        //set the cursors to the users keyboard
-        cursors = game.input.keyboard.createCursorKeys();
-        player.createSprite(this, player);
-        game.physics.p2.enable(player.sprite);
-        //this.physics.enable(player.sprite, Phaser.Physics.ARCADE);
         //contains the maps tiles/sprites
         players = game.add.group();
 
-        //  Creates 10 bullets, using the 'bullet' graphic
-        weapon = game.add.weapon(30, 'red-bullet');
-
-        //  The bullet will be automatically killed when it leaves the world bounds
-        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-
-        //  Because our bullet is drawn facing up, we need to offset its rotation:
-        weapon.bulletAngleOffset = 90;
-
-        //  The speed at which the bullet is fired
-        weapon.bulletSpeed = 400;
-
-        //  Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
-        weapon.fireRate = 60;
-
-        //  Add a variance to the bullet angle by +- this value
-        weapon.bulletAngleVariance = 10;
-
-        //  Tell the Weapon to track the 'player' Sprite, offset by 14px horizontally, 0 vertically
-        weapon.trackSprite(player.sprite, 14, 0);
+        //set the cursors to the users keyboard
+        cursors = game.input.keyboard.createCursorKeys();
     },
     update: function() {
-        updatePlayer();
-        if (this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR).isDown)
+        if (gameStart)
         {
-            weapon.fire();
+            updatePlayer();
+            if (this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR).isDown)
+            {
+                weapon.fire();
+            }
         }
     },
     render : function(){
@@ -184,6 +191,7 @@ function updatePlayer(){
             //update player label
             player.label.position = pos;
             player.label.anchor.setTo(0.5, 1);
+            //announce player movement to server to sync clients
             socket.emit('player moved', {position: player.sprite.position, username: player.username});
         }
     }

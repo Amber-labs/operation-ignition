@@ -113,6 +113,10 @@ io.on('connection', function(socket){
         players.push(newPlayer);
     });
 
+    socket.on('current players', function (msg) {
+        io.to(socket.id).emit('current players', players);
+    });
+
     socket.on('message', function(msg){
        console.log('message sent: '+JSON.stringify(msg));
        io.emit('message', msg);

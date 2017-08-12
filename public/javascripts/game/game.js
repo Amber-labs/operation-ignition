@@ -2,6 +2,7 @@ var game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'game-container');
 var player = {};
 var players;
 var classes;
+var gameStart = false;
 
 //add the game states
 game.state.add('boot', boot);
@@ -87,21 +88,22 @@ function startGame() {
         var playerImage = game.cache.getImage(sprite);
         //create/add player label/name to state
         sprite.label = state.add.text(sprite.sprite.position.x, sprite.sprite.position.y - playerImage.height, sprite.username, {
-            font: '24px Arial',
-            fill: '#222'
+            font: '24px Arial'
         });
         sprite.label.anchor.setTo(0.5, 0.5);
         //anchor player to middle
         sprite.sprite.anchor.setTo(0.5, 0.5);
-        state.physics.p2.enable(sprite.sprite);
+        map.physics.p2.enable(sprite.sprite);
         sprite.sprite.scale.setTo(0.15, 0.15);
         sprite.sprite.body.fixedRotation = true;
         game.camera.follow(sprite.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
     }
-    game.state.start('map');
     $("div#login").removeClass("show");
     $("div#chat").addClass("show");
     $("div#stats").addClass("show");
+    addPlayer();
+    socket.emit('new player', player.username);
+    gameStart = true;
 }
 
 $(window).resize(function() { window.resizeGame(); } );
@@ -123,3 +125,5 @@ $.ajax({
         classes = doc;
     }
 });
+
+game.state.start('map');
