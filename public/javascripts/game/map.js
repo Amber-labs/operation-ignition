@@ -36,10 +36,8 @@ socket.on('disconnected', function (id){
     removePlayer(id);
 });
 
-function addPlayer() {
-    player.createSprite(map, player);
-    game.physics.p2.enable(player.sprite);
-    //this.physics.enable(player.sprite, Phaser.Physics.ARCADE);
+function addPlayer(state, player) {
+    player.createSprite(state, player);
 
     //Creates 10 bullets, using the 'bullet' graphic
     weapon = game.add.weapon(10, 'red-bullet');

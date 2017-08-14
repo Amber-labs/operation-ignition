@@ -9,6 +9,8 @@ game.state.add('boot', boot);
 game.state.add('preload',preload);
 game.state.add('characterCreate', characterCreate);
 game.state.add('map', map);
+game.state.start('map');
+
 
 var ignite = angular.module('ignite',[]);
 
@@ -21,7 +23,9 @@ ignite.controller('ignite-controller', function($scope, $http){
 ignite.run(function($rootScope, $http) {
     //if the user has already been logged in
     if (!$("div#login").hasClass("show")) {
-        startGameLogin($http);
+        setTimeout(function() {
+            startGameLogin($http);
+            }, 100);
     }
     else {
         $rootScope.$on("$includeContentLoaded", function(event, templateName){
@@ -93,7 +97,7 @@ function startGame() {
         sprite.label.anchor.setTo(0.5, 0.5);
         //anchor player to middle
         sprite.sprite.anchor.setTo(0.5, 0.5);
-        map.physics.p2.enable(sprite.sprite);
+        state.physics.p2.enable(sprite.sprite);
         sprite.sprite.scale.setTo(0.15, 0.15);
         sprite.sprite.body.fixedRotation = true;
         game.camera.follow(sprite.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -101,7 +105,7 @@ function startGame() {
     $("div#login").removeClass("show");
     $("div#chat").addClass("show");
     $("div#stats").addClass("show");
-    addPlayer();
+    addPlayer(map, player);
     socket.emit('new player', player.username);
     gameStart = true;
 }
@@ -125,5 +129,3 @@ $.ajax({
         classes = doc;
     }
 });
-
-game.state.start('map');
