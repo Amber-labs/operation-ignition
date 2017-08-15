@@ -41,7 +41,7 @@ div.card {
   height: 50%;
   min-height: 400px;
   border-radius: 6px;
-  border: solid 1px rgb(208,208,208);
+  border: solid 1px rgb(200,200,200);
   padding: 40px 10px;
   max-width: 1000px;
   overflow-y: scroll;

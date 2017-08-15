@@ -82,26 +82,32 @@ div#chat > form#chatbox > button#sendmessage {
     border-top-right-radius: 6px;
 }
 
-div#stats
-{
+div#stats {
     bottom: 25px;
     left: 15px;
     width: 40%;
     background-color: rgba(10,10,10,0.4);
 }
 
-div#stats > div.health
-{
+div#stats > div.health {
     padding: 0px 10px;
     color: white;
     background-color: #FB651D;
     width: 100%;
 }
 
-div#login
-{
+div#login {
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
+    background-color: rgba(40, 40, 40, 0.5);
+}
+
+div#login > div.card > div.container > div.row > form > input {
+    margin: 5px 0px;
+}
+
+div#login > div.card > div.container > div.row {
+   text-align: center;
 }
