@@ -10,6 +10,12 @@ var map = {
         this.load.image('grass','/images/tiles/grass_placeholder.png');
         this.load.image('tile','/images/tiles/tile_placeholder.png');
         this.load.image('rouge', '/images//player/characters/rouge.png');
+
+        this.load.image('brick','/images/tiles/brick.png');
+        this.load.image('grass2','/images/tiles/grass.png');
+        this.load.image('road','/images/tiles/road.png');
+        this.load.image('map','/images/tiles/Capturse.png');
+
     },
     create: function () {
         socket.emit('new player', player.username);
@@ -21,17 +27,37 @@ var map = {
         var mapTiles = this.add.group();
         players = game.add.group();
 
+        // array of tiles
+        var gameTile = ['brick', 'grass2','road','tile'];
+        var counter = 0;
+
+        game.add.image(50,150, 'map');
+
+        /*
         //hard coded tile dimensions
         var tileHeight = 20;
         var tileWidth = 20;
+        game.add.images('map', 0,0);
         for (var y = 0; y < this.height; y += tileHeight)
             for (var x = 0; x < this.width; x += tileWidth) {
-                if (x % 300 == 0 || y % 300 == 0 || x % this.width == 0 || y % this.width == 0)
-                    mapTiles.create(x, y, 'tile');
-                else
-                    mapTiles.create(x,y, 'grass');
-            }
+                if (counter >= gameTile.length) {
+                    counter = 0;
+                }
 
+                if (x % 200 == 0 || y % 200 == 0)
+                    mapTiles.create(x, y, gameTile[0]);
+                else if (x % 240 == 0 || y % 240 == 0)
+                {
+                    if (counter == 3)
+                        mapTiles.create(x, y, gameTile[counter--]);
+                    else
+                        mapTiles.create(x, y, gameTile[counter++]);
+                }
+                else
+                    mapTiles.create(x,y, gameTile[1]);
+
+            }
+*/
 
         //set the cursors to the users keyboard
         cursors = game.input.keyboard.createCursorKeys();
