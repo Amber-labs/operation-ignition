@@ -10,12 +10,10 @@ var map = {
         this.load.image('grass','/images/tiles/grass_placeholder.png');
         this.load.image('tile','/images/tiles/tile_placeholder.png');
         this.load.image('rouge', '/images//player/characters/rouge.png');
-
-        this.load.image('brick','/images/tiles/brick.png');
-        this.load.image('grass2','/images/tiles/grass.png');
-        this.load.image('road','/images/tiles/road.png');
-        this.load.image('map','/images/tiles/Capturse.png');
-
+        this.load.tilemap('spawn', '/map/spawn.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles', '/tilesets/super_mario.png');
+        this.load.image('Walls_tiles', '/tilesets/Walls.jpg');
+        this.load.image('buildings_tiles', '/tilesets/tileset.png');
     },
     create: function () {
         socket.emit('new player', player.username);
@@ -23,45 +21,26 @@ var map = {
         this.world.setBounds(0, 0, this.width, this.height);
         this.physics.startSystem(Phaser.Physics.P2JS);
 
-        //contains the maps tiles/sprites
-        var mapTiles = this.add.group();
-        players = game.add.group();
+        var map = game.add.tilemap('spawn');
 
-        // array of tiles
-        var gameTile = ['brick', 'grass2','road','tile'];
-        var counter = 0;
+        map.addTilesetImage('buildings', 'buildings_tiles');
 
-        game.add.image(50,150, 'map');
+        var layer = map.createLayer('background');
+        var roads = map.createLayer('roads');
+        var plants = map.createLayer('plants');
+        var water = map.createLayer('water');
+        var buildings = map.createLayer('buildings');
 
-        /*
-        //hard coded tile dimensions
-        var tileHeight = 20;
-        var tileWidth = 20;
-        game.add.images('map', 0,0);
-        for (var y = 0; y < this.height; y += tileHeight)
-            for (var x = 0; x < this.width; x += tileWidth) {
-                if (counter >= gameTile.length) {
-                    counter = 0;
-                }
+        layer.resizeWorld();
 
-                if (x % 200 == 0 || y % 200 == 0)
-                    mapTiles.create(x, y, gameTile[0]);
-                else if (x % 240 == 0 || y % 240 == 0)
-                {
-                    if (counter == 3)
-                        mapTiles.create(x, y, gameTile[counter--]);
-                    else
-                        mapTiles.create(x, y, gameTile[counter++]);
-                }
-                else
-                    mapTiles.create(x,y, gameTile[1]);
-
-            }
-*/
 
         //set the cursors to the users keyboard
         cursors = game.input.keyboard.createCursorKeys();
         player.createSprite(this, player);
+        game.physics.p2.enable(player.sprite);
+        //this.physics.enable(player.sprite, Phaser.Physics.ARCADE);
+        //contains the maps tiles/sprites
+        players = game.add.group();
     },
     update: function() {
         updatePlayer();
@@ -102,7 +81,7 @@ var map = {
             //if the player is currently alive
             if (player.stats.currentHealth > 0)
             {
-                var delta = 200;
+                var delta = 300;
                 //reset velocity
                 //player.sprite.body.velocity.setTo(0,0);
                 player.sprite.body.setZeroVelocity();
@@ -151,7 +130,7 @@ var map = {
         }
     },
     render : function(){
-        game.debug.cameraInfo(this.camera, 32, 32);
-        game.debug.spriteCoords(player.sprite, 32, 500);
+        //game.debug.cameraInfo(this.camera, 32, 32);
+        //game.debug.spriteCoords(player.sprite, 32, 500);
     }
 };
