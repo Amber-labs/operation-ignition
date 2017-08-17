@@ -102,6 +102,7 @@ div#login {
     right: 0;
     left: 0;
     background-color: rgba(40, 40, 40, 0.5);
+    z-index: 500;
 }
 
 div#login > div.card > div.container > div.row > form > input {
@@ -109,5 +110,11 @@ div#login > div.card > div.container > div.row > form > input {
 }
 
 div#login > div.card > div.container > div.row {
-   text-align: center;
+   /*text-align: center;*/
+}
+
+div.card {
+    background-color: rgba(0,0,0,0);
+    border: none;
+    color: white;
 }
