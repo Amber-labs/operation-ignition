@@ -65,16 +65,12 @@ function addNewPlayer(newPlayer) {
         if (!alreadyAdded) {
             console.log('new player: ' + newPlayer.username);
             const playerClass = 'rouge';
-            var newPlayerSprite = players.create(game.width / 2, game.height / 2, playerClass);
-            newPlayerSprite.scale.setTo(0.15, 0.15);
-            newPlayerSprite.anchor.setTo(0.5, 0.5);
-            newPlayerSprite.username = newPlayer.username;
-            newPlayerSprite.displayLabel = game.add.text(newPlayerSprite.position.x, newPlayerSprite.position.y, newPlayerSprite.username, {
-                font: '24px Arial',
-                fill: '#444'
-            });
-            newPlayerSprite.displayLabel.anchor.setTo(0.5, 1);
-            newPlayerSprite.id = newPlayer.id;
+            newPlayer.sprite = players.create(game.width / 2, game.height / 2, playerClass);
+            newPlayer.sprite .scale.setTo(0.15, 0.15);
+            newPlayer.sprite.anchor.setTo(0.5, 0.5);
+            newPlayer.sprite.username = newPlayer.username;
+            new Player().createSpriteLabel(map, newPlayer);
+            newPlayer.sprite.id = newPlayer.id;
         }
     }
 }
@@ -82,7 +78,7 @@ function addNewPlayer(newPlayer) {
 function removePlayer(removedPlayer) {
     players.forEach(function(player){
        if(player.id === removedPlayer) {
-           player.displayLabel.destroy();
+           player.label.destroy();
            players.remove(player);
            $("ul#messages").append("<li><b>"+player.username+"</b> has disconnected</li>");
        }
@@ -95,7 +91,7 @@ socket.on('player moved', function(msg){
     players.forEach(function(player){
         if(player.id === mover.id) {
             player.position = mover.position;
-            player.displayLabel.position = mover.position;
+            player.label.position = mover.position;
         }
     });
 });
